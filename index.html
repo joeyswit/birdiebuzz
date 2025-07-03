@@ -7,16 +7,16 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet" />
   <style>
-    .subtle-ai {
+    .subtle-ai-powered {
       text-decoration: underline;
-      text-decoration-color: #a7f3d0; /* Tailwind emerald-300 */
+      text-decoration-color: #d1fae5; /* Tailwind emerald-100, very subtle */
       text-underline-offset: 3px;
-      color: #065f46; /* Tailwind emerald-800 */
+      color: inherit;
       font-weight: 600;
-      transition: color 0.3s ease;
+      transition: text-decoration-color 0.3s ease;
     }
-    .subtle-ai:hover {
-      color: #047857; /* Slightly brighter on hover */
+    .subtle-ai-powered:hover {
+      text-decoration-color: #a7f3d0; /* Tailwind emerald-300 on hover */
     }
   </style>
 </head>
@@ -30,7 +30,7 @@
 
   <main class="flex-grow flex flex-col items-center justify-center px-4 text-center max-w-xl mx-auto mt-8 relative z-10">
     <p class="text-black text-lg mb-4 leading-relaxed">
-      Get <span class="subtle-ai">AI</span>-powered, instant hole-by-hole text message alerts for the golfers you follow. Whether you're tracking a friend in a local tournament or a pro, BirdieBuzz keeps you in the loop.
+      Get <span class="subtle-ai-powered">AI-powered</span>, instant hole-by-hole text message alerts for the golfers you follow. Whether you're tracking a friend in a local tournament or a pro, BirdieBuzz keeps you in the loop.
     </p>
     <p class="text-black text-lg font-semibold mb-8 leading-relaxed">
       No more refreshing leaderboards. Just buzzes when it matters.
@@ -58,8 +58,4 @@
   </div>
 
   <footer class="text-center text-gray-600 py-6 z-10 relative">
-    &copy; 2025 BirdieBuzz, Inc.
-  </footer>
-
-</body>
-</html>
+    &copy; 2025 BirdieBuzz,
