@@ -6,6 +6,19 @@
   <title>BirdieBuzz – AI-Driven Golf Alerts</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet" />
+  <style>
+    .subtle-ai {
+      text-decoration: underline;
+      text-decoration-color: #a7f3d0; /* Tailwind emerald-300 */
+      text-underline-offset: 3px;
+      color: #065f46; /* Tailwind emerald-800 */
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+    .subtle-ai:hover {
+      color: #047857; /* Slightly brighter on hover */
+    }
+  </style>
 </head>
 <body class="bg-green-50 min-h-screen flex flex-col">
 
@@ -17,7 +30,7 @@
 
   <main class="flex-grow flex flex-col items-center justify-center px-4 text-center max-w-xl mx-auto mt-8 relative z-10">
     <p class="text-black text-lg mb-4 leading-relaxed">
-      Get <span class="text-green-400 font-semibold">AI</span>-powered, instant hole-by-hole text message alerts for the golfers you follow. Whether you're tracking a friend in a local tournament or a pro, BirdieBuzz keeps you in the loop.
+      Get <span class="subtle-ai">AI</span>-powered, instant hole-by-hole text message alerts for the golfers you follow. Whether you're tracking a friend in a local tournament or a pro, BirdieBuzz keeps you in the loop.
     </p>
     <p class="text-black text-lg font-semibold mb-8 leading-relaxed">
       No more refreshing leaderboards. Just buzzes when it matters.
