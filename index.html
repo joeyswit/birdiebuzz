@@ -5,18 +5,46 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>BirdieBuzz</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet" />
 </head>
 <body class="bg-green-50 min-h-screen flex flex-col">
 
-  <header class="bg-green-700 text-white py-4 text-center">
-    <h1 class="text-4xl font-bold">BirdieBuzz</h1>
+  <header class="bg-green-700 text-white py-4 text-center flex items-center justify-center space-x-3 px-4">
+    <!-- SVG logo -->
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      class="w-12 h-12"
+      viewBox="0 0 64 64"
+      fill="none"
+      stroke="white"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <!-- Bird body -->
+      <ellipse cx="28" cy="32" rx="12" ry="10" fill="white" />
+      <!-- Wing -->
+      <path d="M22 30c6 4 12 2 14-6" stroke="green" stroke-width="3" fill="none"/>
+      <!-- Head -->
+      <circle cx="18" cy="24" r="6" fill="white" stroke="green" stroke-width="2"/>
+      <!-- Eye -->
+      <circle cx="16" cy="23" r="1" fill="green"/>
+      <!-- Golf club -->
+      <line x1="40" y1="45" x2="54" y2="34" stroke="white" stroke-width="4" />
+      <rect x="53" y="32" width="3" height="10" fill="white" rx="1" ry="1" />
+    </svg>
+
+    <!-- Brand name -->
+    <h1 class="text-4xl font-semibold text-white" style="font-family: 'Poppins', sans-serif;">
+      BirdieBuzz
+    </h1>
   </header>
 
-  <main class="flex-grow flex flex-col items-center justify-center px-4 text-center max-w-xl mx-auto">
+  <main class="flex-grow flex flex-col items-center justify-center px-4 text-center max-w-xl mx-auto mt-8">
     <p class="text-green-900 text-lg mb-4">
-      Get instant, hole-by-hole text message alerts for the golfers you follow. Whether you're tracking a friend in a local tournament or following a pro on the course, BirdieBuzz keeps you in the loop as they play — shot by shot, hole by hole.
+      Get instant, hole-by-hole text message alerts for the golfers you follow. Whether you're tracking a friend in a local tournament or following a pro on the course, BirdieBuzz keeps you in the loop as they play — hole by hole.
     </p>
-    <p class="text-green-900 text-lg mb-8">
+    <p class="text-green-900 text-lg font-semibold mb-8">
       No more refreshing leaderboards. Just buzzes when it matters.
     </p>
 
@@ -26,19 +54,19 @@
       </p>
 
       <a href="https://forms.gle/Vr1b8HJsxX5vQTP96" target="_blank"
-         class="block bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-6 rounded-xl mb-4 transition duration-200">
+         class="block bg-green-700 hover:bg-green-800 text-white font-semibold py-3 px-6 rounded-xl mb-4 transition duration-200 shadow-md">
         ✅ Sign Up for BirdieBuzz Alerts
       </a>
 
       <a href="https://forms.gle/qa8UyNeWPQLxdLk37" target="_blank"
-         class="block bg-red-500 hover:bg-red-600 text-white font-semibold py-3 px-6 rounded-xl transition duration-200">
+         class="block border border-gray-400 text-gray-600 hover:text-gray-800 hover:border-gray-600 font-semibold py-3 px-6 rounded-xl transition duration-200">
         ❌ Unsubscribe from Alerts
       </a>
     </div>
   </main>
 
   <footer class="text-center text-gray-600 py-6">
-    &copy; 2025 BirdieBuzz. Built with ❤️ for golf fans.
+    &copy; 2025 BirdieBuzz.
   </footer>
 
 </body>
