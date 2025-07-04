@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -58,11 +58,22 @@
         </p>
 
         <div class="bg-green-100 rounded-2xl shadow-xl p-6 w-full">
+          <!-- Consent Checkbox -->
+          <label class="flex items-start gap-2 mb-4 text-sm text-gray-700">
+            <input type="checkbox" id="consentCheckbox" class="mt-1" />
+            <span>
+              I consent to receive SMS alerts from BirdieBuzz at the number I provide. Standard messaging rates apply.
+            </span>
+          </label>
+
+          <!-- Sign Up Button (Initially Disabled) -->
           <a href="signup.html"
-             class="block bg-green-700 hover:bg-green-800 text-white font-semibold py-3 px-6 rounded-xl mb-4 transition duration-200 shadow-md">
+             id="signUpButton"
+             class="block bg-green-700 text-white font-semibold py-3 px-6 rounded-xl mb-4 transition duration-200 shadow-md cursor-not-allowed opacity-50 pointer-events-none">
             Sign Up for BirdieBuzz Alerts
           </a>
 
+          <!-- Unsubscribe Link -->
           <a href="https://forms.gle/qa8UyNeWPQLxdLk37" target="_blank"
              class="block border border-gray-400 text-gray-600 hover:text-gray-800 hover:border-gray-600 font-semibold py-3 px-6 rounded-xl transition duration-200">
             Unsubscribe from Alerts
@@ -70,7 +81,7 @@
         </div>
 
         <p class="mt-4 text-xs italic text-gray-600">
-          By signing up, you consent to receive the alerts you choose. Standard SMS rates may apply. You can unsubscribe anytime using the button above.
+          By checking this box, you consent to receive the SMS alerts you choose at the number provided. Standard SMS rates may apply. You can unsubscribe anytime using the button above or by replying STOP.
         </p>
 
         <!-- Two blank rows of space between text and image -->
@@ -89,15 +100,29 @@
   </main>
 
   <div class="text-center text-gray-700 py-4">
-            <!-- Two blank rows of space between image and text -->
-            <p>&nbsp;</p>
-             <p>&nbsp;</p>
+    <!-- Two blank rows of space between image and text -->
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
     For support, contact us at <a href="mailto:birdiebuzzalerts@gmail.com" class="text-green-700 hover:underline">birdiebuzzalerts@gmail.com</a>
   </div>
 
   <footer class="text-center text-gray-600 py-6 z-10 relative">
     &copy; 2025 BirdieBuzz, Inc.
   </footer>
+
+  <!-- Enable Sign Up Button Only When Checkbox is Checked -->
+  <script>
+    const checkbox = document.getElementById('consentCheckbox');
+    const button = document.getElementById('signUpButton');
+
+    checkbox.addEventListener('change', function () {
+      if (this.checked) {
+        button.classList.remove('opacity-50', 'pointer-events-none', 'cursor-not-allowed');
+      } else {
+        button.classList.add('opacity-50', 'pointer-events-none', 'cursor-not-allowed');
+      }
+    });
+  </script>
 
 </body>
 </html>
