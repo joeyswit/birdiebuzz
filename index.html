@@ -24,12 +24,23 @@
       font-weight: 500;
     }
 
-    .soft-edges {
-      mask-image: radial-gradient(ellipse 75% 100% at center, black 35%, transparent 100%);
-      -webkit-mask-image: radial-gradient(ellipse 75% 100% at center, black 35%, transparent 100%);
-      mask-size: cover;
-      -webkit-mask-size: cover;
-    }
+      .soft-edges {
+    /* Create a mask with fading edges of 30px thickness on left, right, and top */
+    mask-image: 
+      linear-gradient(to bottom, transparent 0px, black 30px),   /* fade from top */
+      linear-gradient(to right, transparent 0px, black 30px),    /* fade from left */
+      linear-gradient(to left, transparent 0px, black 30px);     /* fade from right */
+    
+    -webkit-mask-image: 
+      linear-gradient(to bottom, transparent 0px, black 30px),
+      linear-gradient(to right, transparent 0px, black 30px),
+      linear-gradient(to left, transparent 0px, black 30px);
+  
+    /* Combine masks */
+    mask-composite: intersect;
+    -webkit-mask-composite: destination-in;
+  }
+
 
   </style>
 </head>
@@ -73,7 +84,7 @@
 
       <!-- Right: Screenshot -->
       <div class="flex-1 max-w-xs md:pl-6">
-        <img src="birdiebuzz-iphone-screenshot.png" alt="BirdieBuzz SMS preview"
+        <img src="birdiebuzz-iphone-screenshot2.png" alt="BirdieBuzz SMS preview"
              class="rounded-xl shadow-md w-full soft-edges">
       </div>
 
