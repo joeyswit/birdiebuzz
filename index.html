@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>BirdieBuzz – AI-Driven Golf Alerts</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Header font -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet" />
   <style>
     body {
@@ -24,25 +23,35 @@
       font-weight: 500;
     }
 
-      .soft-edges {
-    /* Create a mask with fading edges of 30px thickness on left, right, top, and bottom */
-    mask-image: 
-      linear-gradient(to bottom, transparent 0px, black 10px),   /* fade from top */
-      linear-gradient(to right, transparent 0px, black 35px),    /* fade from left */
-      linear-gradient(to left, transparent 0px, black 35px);     /* fade from right */
-      linear-gradient(to top, transparent 0px, black 10px);     /* fade from bottom */
-    -webkit-mask-image: 
-      linear-gradient(to bottom, transparent 0px, black 10px),
-      linear-gradient(to right, transparent 0px, black 35px),
-      linear-gradient(to left, transparent 0px, black 35px);
-      linear-gradient(to top, transparent 0px, black 10px);
+    .soft-edges {
+      /*
+      Fixed mask-image syntax: commas between all linear-gradients are mandatory.
+      */
 
-    /* Combine masks */
-    mask-composite: intersect;
-    -webkit-mask-composite: destination-in;
-  }
+      mask-image:
+        linear-gradient(to bottom, transparent 0px, black 10px),
+        linear-gradient(to right, transparent 0px, black 35px),
+        linear-gradient(to left, transparent 0px, black 35px),
+        linear-gradient(to top, transparent 0px, black 10px);
 
+      -webkit-mask-image:
+        linear-gradient(to bottom, transparent 0px, black 10px),
+        linear-gradient(to right, transparent 0px, black 35px),
+        linear-gradient(to left, transparent 0px, black 35px),
+        linear-gradient(to top, transparent 0px, black 10px);
 
+      /* Combine masks */
+      mask-composite: intersect;
+      -webkit-mask-composite: destination-in;
+
+      /* Blur filter for soft edges */
+      filter: blur(6px);
+
+      /*
+      Note: mask-composite and -webkit-mask-composite have limited support on Safari/iOS.
+      If it still doesn't show blur, consider using box-shadow or a semi-transparent overlay.
+      */
+    }
   </style>
 </head>
 <body class="bg-green-50 min-h-screen flex flex-col">
@@ -55,7 +64,7 @@
   </header>
 
   <main class="flex-grow flex items-center justify-center px-4 text-center max-w-6xl mx-auto mt-8 relative z-10">
-    <div class="flex flex-col md:flex-row items-center gap-13 w-full">
+    <div class="flex flex-col md:flex-row items-center gap-10 w-full"> <!-- gap-10 is valid Tailwind spacing -->
 
       <!-- Left: Text content -->
       <div class="flex-1 max-w-xl md:pr-6">
@@ -81,10 +90,16 @@
         <p class="mt-4 text-xs italic text-gray-600">
           By signing up, you consent to receive the alerts you choose. Standard SMS rates may apply. You can unsubscribe anytime using the button above.
         </p>
+
+        <!-- Added blank paragraphs for spacing on mobile -->
+        <p class="h-6"></p>
+        <p class="h-6"></p>
+        <p class="h-6"></p>
+
       </div>
 
       <!-- Right: Screenshot -->
-      <div class="flex-1 max-w-xs md:pl-6">
+      <div class="flex-1 max-w-xs md:pl-6 mt-8 md:mt-0"> <!-- Add margin-top on mobile for spacing -->
         <img src="birdiebuzz-iphone-screenshot3.png" alt="BirdieBuzz SMS preview"
              class="rounded-xl shadow-md w-full soft-edges">
       </div>
