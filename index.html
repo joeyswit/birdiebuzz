@@ -27,15 +27,16 @@
       .soft-edges {
     /* Create a mask with fading edges of 30px thickness on left, right, top, and bottom */
     mask-image: 
-      linear-gradient(to bottom, transparent 0px, black 15px),   /* fade from top */
-      linear-gradient(to right, transparent 0px, black 30px),    /* fade from left */
-      linear-gradient(to left, transparent 0px, black 30px);     /* fade from right */
-      linear-gradient(to top, transparent 0px, black 15px);     /* fade from bottom */
+      linear-gradient(to bottom, transparent 0px, black 10px),   /* fade from top */
+      linear-gradient(to right, transparent 0px, black 35px),    /* fade from left */
+      linear-gradient(to left, transparent 0px, black 35px);     /* fade from right */
+      linear-gradient(to top, transparent 0px, black 10px);     /* fade from bottom */
     -webkit-mask-image: 
-      linear-gradient(to bottom, transparent 0px, black 30px),
-      linear-gradient(to right, transparent 0px, black 30px),
-      linear-gradient(to left, transparent 0px, black 30px);
-  
+      linear-gradient(to bottom, transparent 0px, black 10px),
+      linear-gradient(to right, transparent 0px, black 35px),
+      linear-gradient(to left, transparent 0px, black 35px);
+      linear-gradient(to top, transparent 0px, black 10px);
+
     /* Combine masks */
     mask-composite: intersect;
     -webkit-mask-composite: destination-in;
