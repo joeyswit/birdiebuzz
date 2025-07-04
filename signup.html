@@ -40,22 +40,23 @@
 
   <main class="flex-grow flex flex-col max-w-6xl mx-auto mt-8 px-4">
 
-    <!-- Desktop layout -->
-    <div class="flex flex-col md:flex-row md:items-start md:space-x-12">
+    <!-- Responsive layout container -->
+    <div class="flex flex-col md:flex-row md:items-center md:space-x-12">
 
-      <!-- Left side: heading + image (mobile) + form -->
+      <!-- Left column: heading + image (mobile) + form -->
       <div class="flex-1 text-center md:text-left space-y-6">
 
         <h2 class="text-2xl font-semibold text-green-900 header-font">
           Choose Your Option
         </h2>
 
-        <!-- Show image here on mobile only -->
+        <!-- Mobile image only -->
         <div class="block md:hidden">
           <img src="birdiebuzz-iphone-screenshot3.png" alt="BirdieBuzz example"
                class="rounded-lg soft-edges w-3/4 mx-auto" />
         </div>
 
+        <!-- Signup form -->
         <form id="subscriptionForm" class="bg-green-100 rounded-2xl shadow-xl p-6 w-full text-left max-w-md mx-auto md:mx-0">
 
           <fieldset class="mb-6">
@@ -117,14 +118,13 @@
                   class="w-full bg-green-700 hover:bg-green-800 text-white font-semibold py-3 rounded-xl shadow-md transition duration-200">
             Submit
           </button>
-
         </form>
       </div>
 
-      <!-- Right side: image on desktop only -->
-      <div class="hidden md:block flex-1 max-w-sm">
+      <!-- Desktop image: vertically centered with the form -->
+      <div class="hidden md:flex flex-1 items-center justify-center">
         <img src="birdiebuzz-iphone-screenshot3.png" alt="BirdieBuzz service example"
-             class="rounded-lg soft-edges w-full" />
+             class="rounded-lg soft-edges max-w-sm w-full" />
       </div>
 
     </div>
