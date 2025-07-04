@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BirdieBuzz Signup</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+    .header-font {
+      font-family: 'Poppins', sans-serif;
+    }
+    .subtle-ai {
+      text-decoration: underline;
+      text-decoration-color: #d1fae5; /* Tailwind emerald-100 */
+      text-underline-offset: 3px;
+      color: #065f46; /* Tailwind emerald-900 */
+      font-weight: 500; /* Less bold */
+    }
+  </style>
+</head>
+<body class="bg-green-50 min-h-screen flex flex-col">
+
+  <header class="bg-green-700 text-white py-4 text-center flex items-center justify-center px-4">
+    <h1 class="text-4xl font-semibold text-white header-font">
+      BirdieBuzz
+    </h1>
+  </header>
+
+  <main class="flex-grow flex flex-col items-center justify-center px-4 text-center max-w-xl mx-auto mt-8 relative z-10 space-y-6">
+
+    <h2 class="text-2xl font-semibold text-green-900 header-font">
+      Choose Your Subscription
+    </h2>
+
+    <!-- Placeholder image for examples -->
+    <div class="w-full bg-white rounded-2xl shadow p-4">
+      <img src="example.jpeg" alt="BirdieBuzz service example" class="mx-auto max-w-full rounded-lg" />
+      <p class="text-sm text-gray-600 mt-2 italic">Example of the alerts you'll receive</p>
+    </div>
+
+    <!-- Pricing options -->
+    <form id="subscriptionForm" class="bg-green-100 rounded-2xl shadow-xl p-6 w-full text-left">
+
+      <fieldset class="mb-6">
+        <legend class="text-lg font-semibold mb-3 text-green-900">Select Pricing Plan</legend>
+
+        <label class="flex items-center mb-3 cursor-pointer">
+          <input type="radio" name="pricing" value="2-day" class="mr-3" checked />
+          <span>$2 per day</span>
+        </label>
+
+        <label class="flex items-center mb-3 cursor-pointer">
+          <input type="radio" name="pricing" value="4-tournament" class="mr-3" />
+          <span>$4 per tournament</span>
+        </label>
+      </fieldset>
+
+      <!-- Payment options -->
+      <fieldset class="mb-6">
+        <legend class="text-lg font-semibold mb-3 text-green-900">Choose Payment Method</legend>
+
+        <label class="flex items-center mb-3 cursor-pointer">
+          <input type="radio" name="payment" value="credit-card" class="mr-3" checked />
+          <span>Credit Card</span>
+        </label>
+
+        <label class="flex items-center mb-3 cursor-pointer">
+          <input type="radio" name="payment" value="venmo" class="mr-3" />
+          <span>Venmo</span>
+        </label>
+
+        <label class="flex items-center mb-3 cursor-pointer">
+          <input type="radio" name="payment" value="apple-pay" class="mr-3" />
+          <span>Apple Pay</span>
+        </label>
+      </fieldset>
+
+      <!-- Placeholder for credit card input fields -->
+      <div id="creditCardFields" class="mb-6">
+        <label class="block mb-2 font-semibold text-green-900">Credit Card Number</label>
+        <input type="text" name="ccnumber" placeholder="1234 5678 9012 3456" 
+               class="w-full p-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-400" />
+        <div class="flex space-x-4 mt-4">
+          <div class="flex-1">
+            <label class="block mb-2 font-semibold text-green-900">Expiry</label>
+            <input type="text" name="ccexpiry" placeholder="MM/YY" 
+                   class="w-full p-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-400" />
+          </div>
+          <div class="flex-1">
+            <label class="block mb-2 font-semibold text-green-900">CVV</label>
+            <input type="text" name="cccvv" placeholder="123" maxlength="4"
+                   class="w-full p-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-400" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Submit button -->
+      <button type="submit" 
+              class="w-full bg-green-700 hover:bg-green-800 text-white font-semibold py-3 rounded-xl shadow-md transition duration-200">
+        Subscribe
+      </button>
+
+    </form>
+  </main>
+
+  <div class="text-center text-gray-700 py-4">
+    For support, contact us at <a href="mailto:birdiebuzzalerts@gmail.com" class="text-green-700 hover:underline">birdiebuzzalerts@gmail.com</a>
+  </div>
+
+  <footer class="text-center text-gray-600 py-6 z-10 relative">
+    &copy; 2025 BirdieBuzz, Inc.
+  </footer>
+
+  <script>
+    // Show/hide credit card fields depending on payment method
+    const paymentRadios = document.querySelectorAll('input[name="payment"]');
+    const creditCardFields = document.getElementById('creditCardFields');
+
+    function toggleCreditCardFields() {
+      const selectedPayment = document.querySelector('input[name="payment"]:checked').value;
+      if (selectedPayment === 'credit-card') {
+        creditCardFields.style.display = 'block';
+      } else {
+        creditCardFields.style.display = 'none';
+      }
+    }
+
+    paymentRadios.forEach(radio => {
+      radio.addEventListener('change', toggleCreditCardFields);
+    });
+
+    toggleCreditCardFields(); // initialize on page load
+
+    // Simple submit handler placeholder
+    document.getElementById('subscriptionForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      alert('Subscription submitted! (Payment processing not yet implemented.)');
+    });
+  </script>
+
+</body>
+</html>
