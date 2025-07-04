@@ -25,12 +25,12 @@
     }
 
       .soft-edges {
-    /* Create a mask with fading edges of 30px thickness on left, right, and top */
+    /* Create a mask with fading edges of 30px thickness on left, right, top, and bottom */
     mask-image: 
-      linear-gradient(to bottom, transparent 0px, black 30px),   /* fade from top */
+      linear-gradient(to bottom, transparent 0px, black 15px),   /* fade from top */
       linear-gradient(to right, transparent 0px, black 30px),    /* fade from left */
       linear-gradient(to left, transparent 0px, black 30px);     /* fade from right */
-    
+      linear-gradient(to top, transparent 0px, black 15px);     /* fade from bottom */
     -webkit-mask-image: 
       linear-gradient(to bottom, transparent 0px, black 30px),
       linear-gradient(to right, transparent 0px, black 30px),
@@ -84,7 +84,7 @@
 
       <!-- Right: Screenshot -->
       <div class="flex-1 max-w-xs md:pl-6">
-        <img src="birdiebuzz-iphone-screenshot2.png" alt="BirdieBuzz SMS preview"
+        <img src="birdiebuzz-iphone-screenshot3.png" alt="BirdieBuzz SMS preview"
              class="rounded-xl shadow-md w-full soft-edges">
       </div>
 
