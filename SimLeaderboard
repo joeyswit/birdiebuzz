@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>PGA Junior Tour Leaderboard</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f7f7f7;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background: #fff;
+      padding: 20px;
+      border-bottom: 1px solid #ccc;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header img {
+      height: 60px;
+    }
+
+    h1 {
+      font-size: 20px;
+      margin: 10px 0;
+    }
+
+    .leaderboard {
+      width: 90%;
+      max-width: 1000px;
+      margin: 30px auto;
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    .leaderboard caption {
+      font-size: 1.2rem;
+      font-weight: bold;
+      padding: 16px;
+      text-align: left;
+      background-color: #f0f0f0;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      padding: 12px 15px;
+      text-align: left;
+      border-bottom: 1px solid #eee;
+    }
+
+    th {
+      background: #f9f9f9;
+      font-size: 14px;
+      text-transform: uppercase;
+      color: #333;
+    }
+
+    td {
+      font-size: 14px;
+    }
+
+    .to-par.under { color: red; font-weight: bold; }
+    .to-par.over { color: green; font-weight: bold; }
+    .to-par.even { color: black; font-weight: bold; }
+  </style>
+</head>
+<body>
+
+<header>
+  <img src="https://upload.wikimedia.org/wikipedia/en/5/5f/PGA_of_America_logo.svg" alt="PGA Logo">
+  <h1>PGA Middle Atlantic Section Junior Tour</h1>
+</header>
+
+<section class="leaderboard">
+  <caption>Round 1 (Wed, July 2)</caption>
+  <table>
+    <thead>
+      <tr>
+        <th>Pos.</th>
+        <th>Player</th>
+        <th>To Par</th>
+        <th>Thru</th>
+        <th>Total Gross</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>T1</td><td>Nathan Eldridge</td><td class="to-par under">-2</td><td>F</td><td>70</td></tr>
+      <tr><td>T1</td><td>Nathan Switzer</td><td class="to-par under">-2</td><td>F</td><td>70</td></tr>
+      <tr><td>T1</td><td>Vincent Spence</td><td class="to-par under">-2</td><td>F</td><td>70</td></tr>
+      <tr><td>T4</td><td>Rory Sheahan</td><td class="to-par under">-1</td><td>F</td><td>71</td></tr>
+      <tr><td>T4</td><td>Lucas Erdman</td><td class="to-par under">-1</td><td>F</td><td>71</td></tr>
+      <tr><td>T6</td><td>Landon O'Hara</td><td class="to-par over">+1</td><td>F</td><td>73</td></tr>
+      <tr><td>T6</td><td>Palmer Freed</td><td class="to-par over">+1</td><td>F</td><td>73</td></tr>
+      <tr><td>T6</td><td>Harrison Meyer</td><td class="to-par over">+1</td><td>F</td><td>73</td></tr>
+      <tr><td>T6</td><td>Jack Gladfelter</td><td class="to-par over">+1</td><td>F</td><td>73</td></tr>
+      <tr><td>T6</td><td>Justin Zhao</td><td class="to-par over">+1</td><td>F</td><td>73</td></tr>
+      <tr><td>T11</td><td>Chase Connell</td><td class="to-par over">+2</td><td>F</td><td>74</td></tr>
+      <tr><td>T11</td><td>Drew Smolen</td><td class="to-par over">+2</td><td>F</td><td>74</td></tr>
+      <tr><td>T11</td><td>Keagan Graves</td><td class="to-par over">+2</td><td>F</td><td>74</td></tr>
+    </tbody>
+  </table>
+</section>
+
+</body>
+</html>
