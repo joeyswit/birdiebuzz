@@ -263,6 +263,51 @@
 
     updateGolferFields();
     toggleOtherCarrier();
+
+    form.addEventListener('submit', function (e) {
+  e.preventDefault();
+
+  const pricing = document.querySelector('input[name="pricing"]:checked').value;
+  const tierText = pricing === '2-day'
+    ? "$2 for 24 Hours, Single Golfer"
+    : "$5 for Full Tournament, Multiple Golfers";
+
+  const phone = document.querySelector('input[name="phone"]').value.trim();
+  const tournamentUrl = document.querySelector('input[name="tournamentUrl"]').value.trim();
+  const carrierRadio = document.querySelector('input[name="carrier"]:checked');
+  const carrier = carrierRadio.value === "Other" ? otherCarrierInput.value.trim() : carrierRadio.value;
+
+  // Collect golfer names
+  const golferInputs = golferNamesContainer.querySelectorAll('input[type="text"]');
+  const golferNames = Array.from(golferInputs)
+    .map(input => input.value.trim())
+    .filter(name => name.length > 0)
+    .join(', ');
+
+  // Google Form URLs and entry IDs
+  const formBase2Day = "https://docs.google.com/forms/d/e/1FAIpQLSc4TGwC31RwIKQJOdKXCoTI10NtLF_-J08WyzxH_eiKpXuJEA/viewform";
+  const formBase5Day = "https://docs.google.com/forms/d/e/1FAIpQLSeKjIE2fD5sE-fYJkBmmVK1AJC8EaT_A-WJ6c7iwAbTwDFEQA/viewform";
+
+  // Shared fields
+  const entryPhone = "entry.1512645840";
+  const entryURL = "entry.721861280";
+  const entryTier = "entry.847055468";
+  const entryCarrier = "entry.922872338";
+  const entryName2 = "entry.1974527345"; // Player Name for both forms
+
+  const baseUrl = pricing === '2-day' ? formBase2Day : formBase5Day;
+
+  const params = new URLSearchParams();
+  params.set(entryPhone, phone);
+  params.set(entryURL, tournamentUrl);
+  params.set(entryTier, tierText);
+  params.set(entryCarrier, carrier);
+  params.set(entryName2, golferNames); // <- comma-separated golfer list
+
+  // Redirect to pre-filled Google Form
+  window.location.href = `${baseUrl}?${params.toString()}`;
+  });
+
   </script>
 </body>
 </html>
