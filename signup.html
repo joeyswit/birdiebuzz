@@ -30,12 +30,12 @@
       -webkit-mask-composite: intersect;
       mask-composite: intersect;
     }
-    #otherCarrierInput {
-      display: none;
-    }
-    .price-bold {
-      font-weight: 700;
-      color: #15803d; /* Tailwind green-700 */
+    .note-small {
+      font-size: 0.85rem;
+      font-style: italic;
+      color: #065f46;
+      margin-top: -0.5rem;
+      margin-bottom: 1rem;
     }
   </style>
 </head>
@@ -58,17 +58,17 @@
           <img src="birdiebuzz-iphone-screenshot3.png" alt="BirdieBuzz example" class="rounded-lg soft-edges w-3/4 mx-auto" />
         </div>
 
-        <form id="subscriptionForm" class="bg-green-100 rounded-2xl shadow-xl p-6 w-full text-left max-w-md mx-auto md:mx-0" novalidate>
+        <form id="subscriptionForm" class="bg-green-100 rounded-2xl shadow-xl p-6 w-full text-left max-w-md mx-auto md:mx-0">
 
           <fieldset class="mb-6">
             <legend class="text-lg font-semibold mb-3 text-green-900">Select Pricing Plan (one-time purchase)</legend>
             <label class="flex items-center mb-3 cursor-pointer">
               <input type="radio" name="pricing" value="2-day" class="mr-3" checked />
-              <span><span class="price-bold">$2</span> for 24 Hours, Single Golfer</span>
+              <span><strong class="text-green-700">$2</strong> for 24 Hours, Single Golfer</span>
             </label>
             <label class="flex items-center mb-3 cursor-pointer">
               <input type="radio" name="pricing" value="5-full" class="mr-3" />
-              <span><span class="price-bold">$5</span> for Full Tournament, Multiple Golfers</span>
+              <span><strong class="text-green-700">$5</strong> for Full Tournament, Multiple Golfers</span>
             </label>
           </fieldset>
 
@@ -81,10 +81,9 @@
 
           <div class="mb-6">
             <label class="block mb-2 font-semibold text-green-900">Phone Number</label>
-            <input type="tel" name="phone" required pattern="^\d{10}$" 
-              placeholder="e.g. 5551234567"
+            <input type="tel" name="phone" required pattern="\d{10}" maxlength="10" placeholder="e.g. 5551234567"
               class="w-full p-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-400" />
-            <p class="text-sm text-red-600 mt-1 hidden" id="phoneError">Please enter exactly 10 digits.</p>
+            <p class="note-small">Enter 10 digits only, no dashes or spaces.</p>
           </div>
 
           <fieldset class="mb-6">
@@ -106,15 +105,15 @@
               <span>Verizon</span>
             </label>
             <label class="flex items-center mb-2 cursor-pointer">
-              <input type="radio" name="carrier" value="Other" class="mr-3" />
+              <input type="radio" name="carrier" value="Other" class="mr-3" id="carrierOtherRadio" />
               <span>Other</span>
             </label>
-            <input type="text" id="otherCarrierInput" name="otherCarrier" placeholder="Please specify carrier"
-              class="w-full p-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-400 mt-2" />
+            <input type="text" name="carrierOtherText" id="carrierOtherText" placeholder="Please specify"
+              class="mt-2 p-2 w-full rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-400 hidden" />
           </fieldset>
 
           <p class="mb-6 text-green-900 font-semibold italic text-center">
-            After your purchase, you will enter a Player Name, Phone Number, and Tournament URL on the next page.
+            After your purchase, you will enter Player Name, Phone Number, and Tournament URL on the next page.
           </p>
 
           <button type="submit"
@@ -144,19 +143,20 @@
   </footer>
 
   <script>
+    // Show/hide "Other" carrier text input
     const carrierRadios = document.querySelectorAll('input[name="carrier"]');
-    const otherCarrierInput = document.getElementById('otherCarrierInput');
-    const phoneInput = document.querySelector('input[name="phone"]');
-    const phoneError = document.getElementById('phoneError');
+    const carrierOtherText = document.getElementById('carrierOtherText');
+    const carrierOtherRadio = document.getElementById('carrierOtherRadio');
 
     carrierRadios.forEach(radio => {
       radio.addEventListener('change', () => {
-        if (radio.value === 'Other' && radio.checked) {
-          otherCarrierInput.style.display = 'block';
-          otherCarrierInput.setAttribute('required', 'required');
-        } else if (radio.checked) {
-          otherCarrierInput.style.display = 'none';
-          otherCarrierInput.removeAttribute('required');
+        if (carrierOtherRadio.checked) {
+          carrierOtherText.style.display = 'block';
+          carrierOtherText.required = true;
+        } else {
+          carrierOtherText.style.display = 'none';
+          carrierOtherText.required = false;
+          carrierOtherText.value = '';
         }
       });
     });
@@ -164,39 +164,46 @@
     document.getElementById('subscriptionForm').addEventListener('submit', function (e) {
       e.preventDefault();
 
-      // Validate phone number: exactly 10 digits
-      const phoneVal = phoneInput.value.trim();
-      const phoneRegex = /^\d{10}$/;
-      if (!phoneRegex.test(phoneVal)) {
-        phoneError.style.display = 'block';
-        phoneInput.focus();
-        return;
-      } else {
-        phoneError.style.display = 'none';
-      }
-
       const pricing = document.querySelector('input[name="pricing"]:checked').value;
-      const tier = pricing === '2-day'
-        ? "$2 for 24 Hours, Single Golfer"
-        : "$5 for Full Tournament, Multiple Golfers";
-
+      const phone = document.querySelector('input[name="phone"]').value;
       const tournamentUrl = document.querySelector('input[name="tournamentUrl"]').value;
 
-      let carrier = document.querySelector('input[name="carrier"]:checked').value;
-      if (carrier === 'Other') {
-        carrier = otherCarrierInput.value.trim();
+      let carrier = '';
+      if (carrierOtherRadio.checked) {
+        carrier = carrierOtherText.value.trim();
+      } else {
+        carrier = document.querySelector('input[name="carrier"]:checked').value;
       }
 
-      const formBaseUrl = "https://docs.google.com/forms/d/e/1FAIpQLSc4TGwC31RwIKQJOdKXCoTI10NtLF_-J08WyzxH_eiKpXuJEA/viewform";
-      const entryPhone = "entry.1512645840";
-      const entryTournamentUrl = "entry.721861280";
-      const entryTier = "entry.847055468";
-      const entryCarrier = "entry.922872338";
+      // Replace these URLs with your full Google Forms URLs (not short forms)
+      const formTwoDay = "https://docs.google.com/forms/d/e/1FAIpQLSiQgLKXRhngsTLq5f9/viewform"; // your full 2-day form URL here
+      const formFiveFull = "https://docs.google.com/forms/d/e/1FAIpQLSfe1pw84Y7d3748dy8/viewform"; // your full 5-day form URL here
+
+      // Entry IDs for each form:
+      const entryPhone_2day = "entry.1512645840";
+      const entryPayment_2day = "entry.847055468";
+      const entryPlayerName_2day = "entry.1974527345";
+      const entryUrl_2day = "entry.721861280";
+      const entryCarrier_2day = "entry.922872338";
+
+      const entryPhone_5day = "entry.1512645840";
+      const entryPayment_5day = "entry.847055468";
+      const entryPlayerName_5day = "entry.1974527345";
+      const entryUrl_5day = "entry.721861280";
+      const entryCarrier_5day = "entry.922872338";
+
+      // Construct URL based on selected plan
+      let redirectUrl = "";
+
+      if (pricing === "2-day") {
+        redirectUrl = `${formTwoDay}?${entryPhone_2day}=${encodeURIComponent(phone)}&${entryPayment_2day}=${encodeURIComponent("$2 for 24 Hours, Single Golfer")}&${entryUrl_2day}=${encodeURIComponent(tournamentUrl)}&${entryCarrier_2day}=${encodeURIComponent(carrier)}`;
+      } else {
+        redirectUrl = `${formFiveFull}?${entryPhone_5day}=${encodeURIComponent(phone)}&${entryPayment_5day}=${encodeURIComponent("$5 for Full Tournament, Multiple Golfers")}&${entryUrl_5day}=${encodeURIComponent(tournamentUrl)}&${entryCarrier_5day}=${encodeURIComponent(carrier)}`;
+      }
 
       setTimeout(() => {
-        const redirectUrl = `${formBaseUrl}?${entryPhone}=${encodeURIComponent(phoneVal)}&${entryTournamentUrl}=${encodeURIComponent(tournamentUrl)}&${entryTier}=${encodeURIComponent(tier)}&${entryCarrier}=${encodeURIComponent(carrier)}`;
         window.location.href = redirectUrl;
-      }, 1000);
+      }, 800);
     });
   </script>
 
