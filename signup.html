@@ -40,91 +40,81 @@
 
   <main class="flex-grow flex flex-col max-w-6xl mx-auto mt-8 px-4">
 
-    <!-- Responsive layout container -->
     <div class="flex flex-col md:flex-row md:items-center md:space-x-12">
-
-      <!-- Left column: heading + image (mobile) + form -->
       <div class="flex-1 text-center md:text-left space-y-6">
 
         <h2 class="text-2xl font-semibold text-green-900 header-font">
           Choose Your Option
         </h2>
 
-        <!-- Mobile image only -->
         <div class="block md:hidden">
-          <img src="birdiebuzz-iphone-screenshot3.png" alt="BirdieBuzz example"
-               class="rounded-lg soft-edges w-3/4 mx-auto" />
+          <img src="birdiebuzz-iphone-screenshot3.png" alt="BirdieBuzz example" class="rounded-lg soft-edges w-3/4 mx-auto" />
         </div>
 
-        <!-- Signup form -->
         <form id="subscriptionForm" class="bg-green-100 rounded-2xl shadow-xl p-6 w-full text-left max-w-md mx-auto md:mx-0">
 
           <fieldset class="mb-6">
             <legend class="text-lg font-semibold mb-3 text-green-900">Select Pricing Plan (one-time purchase)</legend>
-
             <label class="flex items-center mb-3 cursor-pointer">
               <input type="radio" name="pricing" value="2-day" class="mr-3" checked />
               <span>$2 for 1 Day</span>
             </label>
-
             <label class="flex items-center mb-3 cursor-pointer">
-              <input type="radio" name="pricing" value="4-tournament" class="mr-3" />
-              <span>$4 for Full Tournament</span>
+              <input type="radio" name="pricing" value="5-full" class="mr-3" />
+              <span>$5 for Full Tournament</span>
             </label>
           </fieldset>
+
+          <div class="mb-6">
+            <label class="block mb-2 font-semibold text-green-900">Phone Number</label>
+            <input type="tel" name="phone" required placeholder="e.g. 555-123-4567"
+              class="w-full p-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-400" />
+          </div>
+
+          <div class="mb-6">
+            <label class="block mb-2 font-semibold text-green-900">Tournament URL</label>
+            <input type="url" name="tournamentUrl" required placeholder="e.g. https://pgatour.com/..."
+              class="w-full p-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-400" />
+          </div>
 
           <fieldset class="mb-6">
-            <legend class="text-lg font-semibold mb-3 text-green-900">Choose Payment Method</legend>
-
-            <label class="flex items-center mb-3 cursor-pointer">
-              <input type="radio" name="payment" value="credit-card" class="mr-3" checked />
-              <span>Credit Card</span>
+            <legend class="text-lg font-semibold mb-3 text-green-900">Select Phone Carrier</legend>
+            <label class="flex items-center mb-2 cursor-pointer">
+              <input type="radio" name="carrier" value="AT&T" class="mr-3" required />
+              <span>AT&T</span>
             </label>
-
-            <label class="flex items-center mb-3 cursor-pointer">
-              <input type="radio" name="payment" value="venmo" class="mr-3" />
-              <span>Venmo</span>
+            <label class="flex items-center mb-2 cursor-pointer">
+              <input type="radio" name="carrier" value="Sprint" class="mr-3" />
+              <span>Sprint</span>
             </label>
-
-            <label class="flex items-center mb-3 cursor-pointer">
-              <input type="radio" name="payment" value="apple-pay" class="mr-3" />
-              <span>Apple Pay</span>
+            <label class="flex items-center mb-2 cursor-pointer">
+              <input type="radio" name="carrier" value="T-Mobile" class="mr-3" />
+              <span>T-Mobile</span>
+            </label>
+            <label class="flex items-center mb-2 cursor-pointer">
+              <input type="radio" name="carrier" value="Verizon" class="mr-3" />
+              <span>Verizon</span>
+            </label>
+            <label class="flex items-center mb-2 cursor-pointer">
+              <input type="radio" name="carrier" value="Other" class="mr-3" />
+              <span>Other</span>
             </label>
           </fieldset>
-
-          <div id="creditCardFields" class="mb-6">
-            <label class="block mb-2 font-semibold text-green-900">Credit Card Number</label>
-            <input type="text" name="ccnumber" placeholder="1234 5678 9012 3456"
-                   class="w-full p-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-400" />
-            <div class="flex space-x-4 mt-4">
-              <div class="flex-1">
-                <label class="block mb-2 font-semibold text-green-900">Expiry</label>
-                <input type="text" name="ccexpiry" placeholder="MM/YY"
-                       class="w-full p-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-400" />
-              </div>
-              <div class="flex-1">
-                <label class="block mb-2 font-semibold text-green-900">CVV</label>
-                <input type="text" name="cccvv" placeholder="123" maxlength="4"
-                       class="w-full p-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-400" />
-              </div>
-            </div>
-          </div>
 
           <p class="mb-6 text-green-900 font-semibold italic text-center">
             After your purchase, you will enter a Player Name, Phone Number, and Tournament URL on the next page.
           </p>
 
           <button type="submit"
-                  class="w-full bg-green-700 hover:bg-green-800 text-white font-semibold py-3 rounded-xl shadow-md transition duration-200">
+            class="w-full bg-green-700 hover:bg-green-800 text-white font-semibold py-3 rounded-xl shadow-md transition duration-200">
             Submit
           </button>
         </form>
       </div>
 
-      <!-- Desktop image: vertically centered with the form -->
       <div class="hidden md:flex flex-1 items-center justify-center">
         <img src="birdiebuzz-iphone-screenshot3.png" alt="BirdieBuzz service example"
-             class="rounded-lg soft-edges max-w-sm w-full" />
+          class="rounded-lg soft-edges max-w-sm w-full" />
       </div>
 
     </div>
@@ -142,23 +132,74 @@
   </footer>
 
   <script>
-    const paymentRadios = document.querySelectorAll('input[name="payment"]');
-    const creditCardFields = document.getElementById('creditCardFields');
-
-    function toggleCreditCardFields() {
-      const selectedPayment = document.querySelector('input[name="payment"]:checked').value;
-      creditCardFields.style.display = selectedPayment === 'credit-card' ? 'block' : 'none';
-    }
-
-    paymentRadios.forEach(radio => {
-      radio.addEventListener('change', toggleCreditCardFields);
-    });
-
-    toggleCreditCardFields();
-
-    document.getElementById('subscriptionForm').addEventListener('submit', function(e) {
+    document.getElementById('subscriptionForm').addEventListener('submit', function (e) {
       e.preventDefault();
-      alert('Subscription submitted! After payment, you will be directed to the next page to provide Player Name, Phone Number, and Tournament URL.');
+
+      const pricing = document.querySelector('input[name="pricing"]:checked').value;
+      const tier = pricing === '2-day'
+        ? "$2 for 1 Day (single tournament, single golfer)"
+        : "$5 for Full Tournament (full single tournament, multiple golfers)";
+
+      const phone = document.querySelector('input[name="phone"]').value;
+      const tournamentUrl = document.querySelector('input[name="tournamentUrl"]').value;
+      const carrier = document.querySelector('input[name="carrier"]:checked').value;
+
+      const formBaseUrl = "https://docs.google.com/forms/d/e/1FAIpQLSc4TGwC31RwIKQJOdKXCoTI10NtLF_-J08WyzxH_eiKpXuJEA/viewform";
+      const entryPhone = "entry.1512645840";
+      const entryTournamentUrl = "entry.721861280";
+      const entryTier = "entry.847055468";
+      const entryCarrier = "entry.922872338";
+
+      const redirectUrl = `${formBaseUrl}?${entryPhone}=${encodeURIComponent(phone)}&${entryTournamentUrl}=${encodeURIComponent(tournamentUrl)}&${entryTier}=${encodeURIComponent(tier)}&${entryCarrier}=${encodeURIComponent(carrier)}`;
+
+      // Hide the form to prevent double submits
+      const form = document.getElementById('subscriptionForm');
+      form.style.display = 'none';
+
+      // Create a message container
+      const messageDiv = document.createElement('div');
+      messageDiv.style.textAlign = 'center';
+      messageDiv.style.marginTop = '20px';
+
+      // Add message text
+      const messageText = document.createElement('p');
+      messageText.textContent = "Thanks for signing up! Redirecting you to the next step...";
+      messageText.style.fontWeight = '600';
+      messageText.style.color = '#065f46';
+      messageText.style.fontSize = '1.2rem';
+      messageDiv.appendChild(messageText);
+
+      // Add spinner (simple CSS spinner)
+      const spinner = document.createElement('div');
+      spinner.style.margin = '20px auto 0';
+      spinner.style.border = '4px solid #cbd5e1'; // light gray
+      spinner.style.borderTop = '4px solid #065f46'; // green
+      spinner.style.borderRadius = '50%';
+      spinner.style.width = '36px';
+      spinner.style.height = '36px';
+      spinner.style.animation = 'spin 1s linear infinite';
+      messageDiv.appendChild(spinner);
+
+      // Append messageDiv after form
+      form.parentNode.appendChild(messageDiv);
+
+      // Add spinner CSS animation to document head (only once)
+      if (!document.getElementById('spinner-style')) {
+        const style = document.createElement('style');
+        style.id = 'spinner-style';
+        style.textContent = `
+          @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+          }
+        `;
+        document.head.appendChild(style);
+      }
+
+      // Redirect after 3 seconds
+      setTimeout(() => {
+        window.location.href = redirectUrl;
+      }, 3000);
     });
   </script>
 
