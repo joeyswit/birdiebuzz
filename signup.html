@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" >
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -12,13 +12,6 @@
     }
     .header-font {
       font-family: 'Poppins', sans-serif;
-    }
-    .subtle-ai {
-      text-decoration: underline;
-      text-decoration-color: #d1fae5;
-      text-underline-offset: 3px;
-      color: #065f46;
-      font-weight: 500;
     }
     .soft-edges {
       -webkit-mask-image:
@@ -112,9 +105,20 @@
               class="mt-2 p-2 w-full rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-400 hidden" />
           </fieldset>
 
-          <p class="mb-6 text-green-900 font-semibold italic text-center">
-            After your purchase, you will enter Player Name, Phone Number, and Tournament URL on the next page.
-          </p>
+          <div id="golferSection" class="mb-6">
+            <label class="block mb-2 font-semibold text-green-900">Golfer Name(s)</label>
+
+            <!-- Golfer inputs container -->
+            <div id="golferInputs">
+              <input type="text" name="playerName0" class="w-full mb-2 p-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-400" placeholder="Enter golfer's full name" required />
+            </div>
+
+            <!-- Add Golfer button for $5 plan -->
+            <button type="button" id="addGolferBtn" class="mt-2 px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 hidden">
+              + Add Another Golfer
+            </button>
+            <p class="note-small" id="golferLimitNote" style="display:none;">Maximum 15 golfers allowed.</p>
+          </div>
 
           <button type="submit"
             class="w-full bg-green-700 hover:bg-green-800 text-white font-semibold py-3 rounded-xl shadow-md transition duration-200">
@@ -161,12 +165,87 @@
       });
     });
 
+    // Golfer inputs logic
+    const pricingRadios = document.querySelectorAll('input[name="pricing"]');
+    const golferInputsDiv = document.getElementById('golferInputs');
+    const addGolferBtn = document.getElementById('addGolferBtn');
+    const golferLimitNote = document.getElementById('golferLimitNote');
+
+    function updateGolferInputs() {
+      const selectedPlan = document.querySelector('input[name="pricing"]:checked').value;
+      if (selectedPlan === '2-day') {
+        // Only one golfer input, required
+        addGolferBtn.style.display = 'none';
+        golferLimitNote.style.display = 'none';
+
+        // Remove extra inputs, leave only first
+        const inputs = golferInputsDiv.querySelectorAll('input');
+        inputs.forEach((input, idx) => {
+          if (idx === 0) {
+            input.required = true;
+            input.value = input.value.trim();
+          } else {
+            input.remove();
+          }
+        });
+      } else {
+        // Show add button for multiple golfers
+        addGolferBtn.style.display = 'inline-block';
+        golferLimitNote.style.display = 'block';
+
+        // Make all inputs required
+        golferInputsDiv.querySelectorAll('input').forEach(input => {
+          input.required = true;
+        });
+      }
+    }
+
+    // Add new golfer input
+    addGolferBtn.addEventListener('click', () => {
+      const currentCount = golferInputsDiv.querySelectorAll('input').length;
+      if (currentCount < 15) {
+        const newInput = document.createElement('input');
+        newInput.type = 'text';
+        newInput.name = `playerName${currentCount}`;
+        newInput.placeholder = "Enter golfer's full name";
+        newInput.className = 'w-full mb-2 p-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-400';
+        newInput.required = true;
+        golferInputsDiv.appendChild(newInput);
+        if (currentCount + 1 === 15) {
+          addGolferBtn.disabled = true;
+          addGolferBtn.textContent = "Max 15 golfers reached";
+        }
+      }
+    });
+
+    pricingRadios.forEach(radio => {
+      radio.addEventListener('change', updateGolferInputs);
+    });
+
+    // Initial setup
+    updateGolferInputs();
+
     document.getElementById('subscriptionForm').addEventListener('submit', function (e) {
       e.preventDefault();
 
       const pricing = document.querySelector('input[name="pricing"]:checked').value;
       const phone = document.querySelector('input[name="phone"]').value;
       const tournamentUrl = document.querySelector('input[name="tournamentUrl"]').value;
+
+      // Collect golfers names
+      const golferInputs = golferInputsDiv.querySelectorAll('input');
+      const golferNames = [];
+      golferInputs.forEach(input => {
+        const val = input.value.trim();
+        if(val) {
+          golferNames.push(val);
+        }
+      });
+
+      if (golferNames.length === 0) {
+        alert("Please enter at least one golfer name.");
+        return;
+      }
 
       let carrier = '';
       if (carrierOtherRadio.checked) {
@@ -175,9 +254,9 @@
         carrier = document.querySelector('input[name="carrier"]:checked').value;
       }
 
-      // Replace these URLs with your full Google Forms URLs (not short forms)
-      const formTwoDay = "https://docs.google.com/forms/d/e/1FAIpQLSeXcsZDRjB_p5jgj4lOU07Oy7vivis7M_ATCzO1AOhvRwcUHg/viewform?usp=dialog"; // your full 2-day form URL here
-      const formFiveFull = "https://docs.google.com/forms/d/e/1FAIpQLSeXcsZDRjB_p5jgj4lOU07Oy7vivis7M_ATCzO1AOhvRwcUHg/viewform?usp=dialog"; // your full 5-day form URL here
+      // Google Forms URLs (replace with your full URLs)
+      const formTwoDay = "https://docs.google.com/forms/d/e/1FAIpQLSiQgLKXRhngsTLq5f9/viewform";
+      const formFiveFull = "https://docs.google.com/forms/d/e/1FAIpQLSfe1pw84Y7d3748dy8/viewform";
 
       // Entry IDs for each form:
       const entryPhone_2day = "entry.1512645840";
@@ -192,13 +271,18 @@
       const entryUrl_5day = "entry.721861280";
       const entryCarrier_5day = "entry.922872338";
 
-      // Construct URL based on selected plan
+      // Build redirect URL with multiple golfer entries for $5 plan
       let redirectUrl = "";
 
       if (pricing === "2-day") {
-        redirectUrl = `${formTwoDay}?${entryPhone_2day}=${encodeURIComponent(phone)}&${entryPayment_2day}=${encodeURIComponent("$2 for 24 Hours, Single Golfer")}&${entryUrl_2day}=${encodeURIComponent(tournamentUrl)}&${entryCarrier_2day}=${encodeURIComponent(carrier)}`;
+        // Only one golfer
+        redirectUrl = `${formTwoDay}?${entryPhone_2day}=${encodeURIComponent(phone)}&${entryPayment_2day}=${encodeURIComponent("$2 for 24 Hours, Single Golfer")}&${entryUrl_2day}=${encodeURIComponent(tournamentUrl)}&${entryCarrier_2day}=${encodeURIComponent(carrier)}&${entryPlayerName_2day}=${encodeURIComponent(golferNames[0])}`;
       } else {
-        redirectUrl = `${formFiveFull}?${entryPhone_5day}=${encodeURIComponent(phone)}&${entryPayment_5day}=${encodeURIComponent("$5 for Full Tournament, Multiple Golfers")}&${entryUrl_5day}=${encodeURIComponent(tournamentUrl)}&${entryCarrier_5day}=${encodeURIComponent(carrier)}`;
+        // For multiple golfers, we can only pass one player name per entry.
+        // Google Forms only supports single value per entry field,
+        // so here we concatenate the names into one string separated by commas.
+        const allGolfers = golferNames.join(", ");
+        redirectUrl = `${formFiveFull}?${entryPhone_5day}=${encodeURIComponent(phone)}&${entryPayment_5day}=${encodeURIComponent("$5 for Full Tournament, Multiple Golfers")}&${entryUrl_5day}=${encodeURIComponent(tournamentUrl)}&${entryCarrier_5day}=${encodeURIComponent(carrier)}&${entryPlayerName_5day}=${encodeURIComponent(allGolfers)}`;
       }
 
       setTimeout(() => {
