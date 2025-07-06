@@ -281,31 +281,40 @@
   const golferInputs = golferNamesContainer.querySelectorAll('input[type="text"]');
   const golferNames = Array.from(golferInputs)
     .map(input => input.value.trim())
-    .filter(name => name.length > 0)
-    .join(', ');
+    .filter(name => name.length > 0);
 
-  // Google Form URLs and entry IDs
-  const formBase2Day = "https://docs.google.com/forms/d/e/1FAIpQLSc4TGwC31RwIKQJOdKXCoTI10NtLF_-J08WyzxH_eiKpXuJEA/viewform";
-  const formBase5Day = "https://docs.google.com/forms/d/e/1FAIpQLSeXcsZDRjB_p5jgj4lOU07Oy7vivis7M_ATCzO1AOhvRwcUHg/viewform";
+  const data = {
+    phone,
+    carrier,
+    tournamentUrl,
+    tierText,
+    golferNames
+  };
 
-  // Shared fields
-  const entryPhone = "entry.1512645840";
-  const entryURL = "entry.721861280";
-  const entryTier = "entry.847055468";
-  const entryCarrier = "entry.922872338";
-  const entryName2 = "entry.1974527345"; // Player Name for both forms
+  const callback = {
+    success: () => {
+      alert("Your subscription was successfully submitted!");
+      form.reset();
+      resetGolferFields();
+      updateGolferFields();
+    },
+    failure: (err) => {
+      console.error("Submission failed", err);
+      alert("Something went wrong. Please try again.");
+    }
+  };
 
-  const baseUrl = pricing === '2-day' ? formBase2Day : formBase5Day;
-
-  const params = new URLSearchParams();
-  params.set(entryPhone, phone);
-  params.set(entryURL, tournamentUrl);
-  params.set(entryTier, tierText);
-  params.set(entryCarrier, carrier);
-  params.set(entryName2, golferNames); // <- comma-separated golfer list
-
-  // Redirect to pre-filled Google Form
-  window.location.href = `${baseUrl}?${params.toString()}`;
+  if (pricing === '2-day') {
+    google.script.run
+      .withSuccessHandler(callback.success)
+      .withFailureHandler(callback.failure)
+      .submitTwoDollarForm(data);
+  } else {
+    google.script.run
+      .withSuccessHandler(callback.success)
+      .withFailureHandler(callback.failure)
+      .submitFiveDollarForm(data);
+  }
   });
 
   </script>
