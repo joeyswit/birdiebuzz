@@ -33,6 +33,10 @@
     #otherCarrierInput {
       display: none;
     }
+    .price-bold {
+      font-weight: 700;
+      color: #15803d; /* Tailwind green-700 */
+    }
   </style>
 </head>
 <body class="bg-green-50 min-h-screen flex flex-col">
@@ -60,11 +64,11 @@
             <legend class="text-lg font-semibold mb-3 text-green-900">Select Pricing Plan (one-time purchase)</legend>
             <label class="flex items-center mb-3 cursor-pointer">
               <input type="radio" name="pricing" value="2-day" class="mr-3" checked />
-              <span>$2 for 1 Day</span>
+              <span><span class="price-bold">$2</span> for 24 Hours, Single Golfer</span>
             </label>
             <label class="flex items-center mb-3 cursor-pointer">
               <input type="radio" name="pricing" value="5-full" class="mr-3" />
-              <span>$5 for Full Tournament</span>
+              <span><span class="price-bold">$5</span> for Full Tournament, Multiple Golfers</span>
             </label>
           </fieldset>
 
@@ -80,7 +84,7 @@
               class="w-full p-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-400" />
           </div>
 
-          <fieldset class="mb-2">
+          <fieldset class="mb-6">
             <legend class="text-lg font-semibold mb-3 text-green-900">Select Phone Carrier</legend>
             <label class="flex items-center mb-2 cursor-pointer">
               <input type="radio" name="carrier" value="AT&T" class="mr-3" required />
@@ -105,10 +109,6 @@
             <input type="text" id="otherCarrierInput" name="otherCarrier" placeholder="Please specify carrier"
               class="w-full p-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-400 mt-2" />
           </fieldset>
-
-          <p class="mb-6 italic text-green-900 text-sm">
-            Please ensure the golfer's name is spelled exactly as it appears on the leaderboard page for alerts to work correctly.
-          </p>
 
           <p class="mb-6 text-green-900 font-semibold italic text-center">
             After your purchase, you will enter a Player Name, Phone Number, and Tournament URL on the next page.
@@ -161,8 +161,8 @@
 
       const pricing = document.querySelector('input[name="pricing"]:checked').value;
       const tier = pricing === '2-day'
-        ? "$2 for 1 Day (single tournament, single golfer)"
-        : "$5 for Full Tournament (full single tournament, multiple golfers)";
+        ? "$2 for 24 Hours, Single Golfer"
+        : "$5 for Full Tournament, Multiple Golfers";
 
       const phone = document.querySelector('input[name="phone"]').value;
       const tournamentUrl = document.querySelector('input[name="tournamentUrl"]').value;
@@ -178,7 +178,6 @@
       const entryTier = "entry.847055468";
       const entryCarrier = "entry.922872338";
 
-      // Delay redirect by 1 second to let user see the submit button pressed
       setTimeout(() => {
         const redirectUrl = `${formBaseUrl}?${entryPhone}=${encodeURIComponent(phone)}&${entryTournamentUrl}=${encodeURIComponent(tournamentUrl)}&${entryTier}=${encodeURIComponent(tier)}&${entryCarrier}=${encodeURIComponent(carrier)}`;
         window.location.href = redirectUrl;
