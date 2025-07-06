@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -27,8 +27,42 @@
       font-size: 0.85rem;
       font-style: italic;
       color: #065f46;
-      margin-top: -0.5rem;
+      margin-top: 0.25rem;
       margin-bottom: 1rem;
+    }
+    .golfer-label {
+      font-weight: 600;
+      color: #065f46;
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+    .max-golfers-note {
+      font-size: 0.85rem;
+      font-style: italic;
+      color: #065f46;
+      margin-top: 0.5rem;
+    }
+    .add-golfer-btn {
+      margin-top: 0.5rem;
+      background-color: #065f46;
+      color: white;
+      font-weight: 600;
+      padding: 0.5rem 1rem;
+      border-radius: 0.75rem;
+      cursor: pointer;
+      border: none;
+      transition: background-color 0.2s ease;
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .add-golfer-btn:disabled {
+      background-color: #065f46;
+      opacity: 0.5;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+    .add-golfer-btn:hover:not(:disabled) {
+      background-color: #047857;
     }
   </style>
 </head>
@@ -51,32 +85,31 @@
           <img src="birdiebuzz-iphone-screenshot3.png" alt="BirdieBuzz example" class="rounded-lg soft-edges w-3/4 mx-auto" />
         </div>
 
-        <form id="subscriptionForm" class="bg-green-100 rounded-2xl shadow-xl p-6 w-full text-left max-w-md mx-auto md:mx-0">
+        <form id="subscriptionForm" class="bg-green-100 rounded-2xl shadow-xl p-6 w-full text-left max-w-md mx-auto md:mx-0" novalidate>
 
           <fieldset class="mb-6">
             <legend class="text-lg font-semibold mb-3 text-green-900">Select Pricing Plan (one-time purchase)</legend>
             <label class="flex items-center mb-3 cursor-pointer">
               <input type="radio" name="pricing" value="2-day" class="mr-3" checked />
-              <span><strong class="text-green-700">$2</strong> for 24 Hours, Single Golfer</span>
+              <span><strong class="text-green-800">$2</strong> for 24 Hours, Single Golfer</span>
             </label>
             <label class="flex items-center mb-3 cursor-pointer">
               <input type="radio" name="pricing" value="5-full" class="mr-3" />
-              <span><strong class="text-green-700">$5</strong> for Full Tournament, Multiple Golfers</span>
+              <span><strong class="text-green-800">$5</strong> for Full Tournament, Multiple Golfers</span>
             </label>
           </fieldset>
 
           <div class="mb-6">
             <label class="block mb-2 font-semibold text-green-900">Tournament URL</label>
-            <input type="url" name="tournamentUrl" required
-              placeholder="https://www.ajga.org/tournaments/2025/ajga-junior-all-star-at-quail-creek-presented-by-city-of-robinson/leaderboard"
+            <input type="url" name="tournamentUrl" required placeholder="https://www.ajga.org/tournaments/2025/ajga-junior-all-star-at-quail-creek-presented-by-city-of-robinson/leaderboard"
               class="w-full p-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-400" />
           </div>
 
           <div class="mb-6">
             <label class="block mb-2 font-semibold text-green-900">Phone Number</label>
-            <input type="tel" name="phone" required pattern="\d{10}" maxlength="10" placeholder="e.g. 5551234567"
+            <input type="tel" name="phone" pattern="\d{10}" required placeholder="e.g. 5551234567"
               class="w-full p-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-400" />
-            <p class="note-small">Enter 10 digits only, no dashes or spaces.</p>
+            <div class="note-small">Enter 10 digits only, no dashes or spaces.</div>
           </div>
 
           <fieldset class="mb-6">
@@ -98,26 +131,25 @@
               <span>Verizon</span>
             </label>
             <label class="flex items-center mb-2 cursor-pointer">
-              <input type="radio" name="carrier" value="Other" class="mr-3" id="carrierOtherRadio" />
+              <input type="radio" name="carrier" value="Other" class="mr-3" />
               <span>Other</span>
             </label>
-            <input type="text" name="carrierOtherText" id="carrierOtherText" placeholder="Please specify"
-              class="mt-2 p-2 w-full rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-400 hidden" />
           </fieldset>
 
-          <div id="golferSection" class="mb-6">
-            <label class="block mb-2 font-semibold text-green-900">Golfer Name(s)</label>
+          <div id="otherCarrierContainer" class="mb-6 hidden">
+            <label class="block mb-2 font-semibold text-green-900">Please specify your carrier</label>
+            <input type="text" name="otherCarrier" placeholder="Your carrier"
+              class="w-full p-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-400" />
+          </div>
 
-            <!-- Golfer inputs container -->
-            <div id="golferInputs">
-              <input type="text" name="playerName0" class="w-full mb-2 p-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-400" placeholder="Enter golfer's full name" required />
+          <div id="golferNamesContainer" class="mb-6 hidden">
+            <label class="golfer-label">Golfer Name(s)</label>
+            <input type="text" name="golferName1" placeholder="Golfer 1"
+              class="w-full p-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-400 mb-2" required />
+            <button type="button" id="addGolferBtn" class="add-golfer-btn" disabled>Add another golfer</button>
+            <div id="maxGolfersNote" class="max-golfers-note hidden">
+              Maximum 15 golfers allowed.
             </div>
-
-            <!-- Add Golfer button for $5 plan -->
-            <button type="button" id="addGolferBtn" class="mt-2 px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 hidden">
-              + Add Another Golfer
-            </button>
-            <p class="note-small" id="golferLimitNote" style="display:none;">Maximum 15 golfers allowed.</p>
           </div>
 
           <button type="submit"
@@ -129,15 +161,14 @@
 
       <div class="hidden md:flex flex-1 items-center justify-center">
         <img src="birdiebuzz-iphone-screenshot3.png" alt="BirdieBuzz service example"
-          class="rounded-lg soft-edges max-w-sm w-full" />
+          class="rounded-lg soft-edges w-3/4 max-w-md" />
       </div>
-
     </div>
   </main>
 
-  <div class="text-center text-gray-700 py-4">
-    For support, contact us at
-    <a href="mailto:birdiebuzzalerts@gmail.com" class="text-green-700 hover:underline">
+  <div class="bg-green-700 text-center py-4 text-white text-sm font-semibold">
+    Questions? Email
+    <a href="mailto:birdiebuzzalerts@gmail.com" class="underline hover:text-green-300">
       birdiebuzzalerts@gmail.com
     </a>
   </div>
@@ -147,149 +178,215 @@
   </footer>
 
   <script>
-    // Show/hide "Other" carrier text input
-    const carrierRadios = document.querySelectorAll('input[name="carrier"]');
-    const carrierOtherText = document.getElementById('carrierOtherText');
-    const carrierOtherRadio = document.getElementById('carrierOtherRadio');
-
-    carrierRadios.forEach(radio => {
-      radio.addEventListener('change', () => {
-        if (carrierOtherRadio.checked) {
-          carrierOtherText.style.display = 'block';
-          carrierOtherText.required = true;
-        } else {
-          carrierOtherText.style.display = 'none';
-          carrierOtherText.required = false;
-          carrierOtherText.value = '';
-        }
-      });
-    });
-
-    // Golfer inputs logic
+    const form = document.getElementById('subscriptionForm');
     const pricingRadios = document.querySelectorAll('input[name="pricing"]');
-    const golferInputsDiv = document.getElementById('golferInputs');
+    const carrierRadios = document.querySelectorAll('input[name="carrier"]');
+    const otherCarrierContainer = document.getElementById('otherCarrierContainer');
+    const otherCarrierInput = form.querySelector('input[name="otherCarrier"]');
+    const golferNamesContainer = document.getElementById('golferNamesContainer');
     const addGolferBtn = document.getElementById('addGolferBtn');
-    const golferLimitNote = document.getElementById('golferLimitNote');
+    const maxGolfersNote = document.getElementById('maxGolfersNote');
 
-    function updateGolferInputs() {
-      const selectedPlan = document.querySelector('input[name="pricing"]:checked').value;
-      if (selectedPlan === '2-day') {
-        // Only one golfer input, required
-        addGolferBtn.style.display = 'none';
-        golferLimitNote.style.display = 'none';
-
-        // Remove extra inputs, leave only first
-        const inputs = golferInputsDiv.querySelectorAll('input');
-        inputs.forEach((input, idx) => {
-          if (idx === 0) {
-            input.required = true;
-            input.value = input.value.trim();
-          } else {
-            input.remove();
-          }
-        });
+    // Show/hide "Please specify your carrier" if "Other" selected
+    function toggleOtherCarrier() {
+      const selectedCarrier = document.querySelector('input[name="carrier"]:checked');
+      if (selectedCarrier && selectedCarrier.value === "Other") {
+        otherCarrierContainer.classList.remove('hidden');
+        otherCarrierInput.setAttribute('required', 'required');
       } else {
-        // Show add button for multiple golfers
-        addGolferBtn.style.display = 'inline-block';
-        golferLimitNote.style.display = 'block';
-
-        // Make all inputs required
-        golferInputsDiv.querySelectorAll('input').forEach(input => {
-          input.required = true;
-        });
+        otherCarrierContainer.classList.add('hidden');
+        otherCarrierInput.removeAttribute('required');
+        otherCarrierInput.value = '';
       }
     }
+    carrierRadios.forEach(radio => {
+      radio.addEventListener('change', toggleOtherCarrier);
+    });
+    toggleOtherCarrier();
 
-    // Add new golfer input
-    addGolferBtn.addEventListener('click', () => {
-      const currentCount = golferInputsDiv.querySelectorAll('input').length;
-      if (currentCount < 15) {
-        const newInput = document.createElement('input');
-        newInput.type = 'text';
-        newInput.name = `playerName${currentCount}`;
-        newInput.placeholder = "Enter golfer's full name";
-        newInput.className = 'w-full mb-2 p-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-400';
-        newInput.required = true;
-        golferInputsDiv.appendChild(newInput);
-        if (currentCount + 1 === 15) {
-          addGolferBtn.disabled = true;
-          addGolferBtn.textContent = "Max 15 golfers reached";
+    // Enable or disable Add Golfer button based on last visible golfer input's value
+    function updateAddGolferButtonState() {
+      const inputs = golferNamesContainer.querySelectorAll('input[type="text"]:not([name="otherCarrier"])');
+      if (inputs.length === 0) {
+        addGolferBtn.disabled = true;
+        return;
+      }
+      const lastInput = inputs[inputs.length - 1];
+      addGolferBtn.disabled = lastInput.value.trim().length === 0;
+    }
+
+    // Show/hide golfer fields based on pricing plan
+    function updateGolferFields() {
+      const selectedPricing = document.querySelector('input[name="pricing"]:checked').value;
+      if (selectedPricing === '2-day') {
+        golferNamesContainer.classList.remove('hidden');
+        // Only show one golfer input
+        const inputs = golferNamesContainer.querySelectorAll('input[type="text"]');
+        inputs.forEach((input, index) => {
+          if (index === 0) {
+            input.required = true;
+            input.parentElement.style.display = 'block';
+            input.style.display = 'block';
+            input.value = input.value || '';
+          } else {
+            input.style.display = 'none';
+            input.required = false;
+            input.value = '';
+          }
+        });
+        addGolferBtn.style.display = 'none';
+        maxGolfersNote.classList.add('hidden');
+      } else if (selectedPricing === '5-full') {
+        golferNamesContainer.classList.remove('hidden');
+        addGolferBtn.style.display = 'inline-block';
+        // Show only the first golfer input initially
+        const inputs = golferNamesContainer.querySelectorAll('input[type="text"]');
+        inputs.forEach((input, index) => {
+          input.style.display = index === 0 ? 'block' : input.value ? 'block' : 'none';
+          input.required = index === 0;
+        });
+        maxGolfersNote.classList.add('hidden');
+        updateAddGolferButtonState();
+      }
+    }
+    pricingRadios.forEach(radio => {
+      radio.addEventListener('change', () => {
+        resetGolferFields();
+        updateGolferFields();
+      });
+    });
+
+    function resetGolferFields() {
+      // Remove all golfer inputs except the first one
+      const inputs = golferNamesContainer.querySelectorAll('input[type="text"]');
+      inputs.forEach((input, index) => {
+        if (index > 0) {
+          input.remove();
+        } else {
+          input.value = '';
+          input.required = true;
+          input.style.display = 'block';
         }
+      });
+      maxGolfersNote.classList.add('hidden');
+      addGolferBtn.disabled = true;
+      addGolferBtn.style.cursor = 'not-allowed';
+    }
+
+    // Enable/disable Add Golfer button on input event for last golfer input
+    function attachInputListeners() {
+      const inputs = golferNamesContainer.querySelectorAll('input[type="text"]');
+      inputs.forEach((input, idx) => {
+        input.removeEventListener('input', onGolferInput);
+        input.addEventListener('input', onGolferInput);
+      });
+    }
+    function onGolferInput() {
+      updateAddGolferButtonState();
+    }
+
+    addGolferBtn.addEventListener('click', () => {
+      const inputs = golferNamesContainer.querySelectorAll('input[type="text"]');
+      if (inputs.length >= 15) {
+        maxGolfersNote.classList.remove('hidden');
+        addGolferBtn.disabled = true;
+        addGolferBtn.style.cursor = 'not-allowed';
+        return;
+      }
+      maxGolfersNote.classList.add('hidden');
+      addGolferBtn.disabled = true;
+      addGolferBtn.style.cursor = 'not-allowed';
+
+      const newGolferNum = inputs.length + 1;
+      const newInput = document.createElement('input');
+      newInput.type = 'text';
+      newInput.name = `golferName${newGolferNum}`;
+      newInput.placeholder = `Golfer ${newGolferNum}`;
+      newInput.className = "w-full p-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-400 mb-2";
+      newInput.required = true;
+
+      golferNamesContainer.insertBefore(newInput, addGolferBtn);
+      attachInputListeners();
+      updateAddGolferButtonState();
+
+      if (newGolferNum === 15) {
+        maxGolfersNote.classList.remove('hidden');
+        addGolferBtn.disabled = true;
+        addGolferBtn.style.cursor = 'not-allowed';
       }
     });
 
-    pricingRadios.forEach(radio => {
-      radio.addEventListener('change', updateGolferInputs);
-    });
+    // Initialize form state
+    updateGolferFields();
+    attachInputListeners();
 
-    // Initial setup
-    updateGolferInputs();
-
-    document.getElementById('subscriptionForm').addEventListener('submit', function (e) {
+    // Form submission handling (you can adapt this to your Google Form URLs and entries)
+    form.addEventListener('submit', (e) => {
       e.preventDefault();
 
-      const pricing = document.querySelector('input[name="pricing"]:checked').value;
-      const phone = document.querySelector('input[name="phone"]').value;
-      const tournamentUrl = document.querySelector('input[name="tournamentUrl"]').value;
+      // Collect data
+      const formData = new FormData(form);
+      const pricing = formData.get('pricing');
+      const tournamentUrl = formData.get('tournamentUrl');
+      const phone = formData.get('phone');
+      const carrier = formData.get('carrier') === 'Other' ? formData.get('otherCarrier') : formData.get('carrier');
 
-      // Collect golfers names
-      const golferInputs = golferInputsDiv.querySelectorAll('input');
-      const golferNames = [];
-      golferInputs.forEach(input => {
-        const val = input.value.trim();
-        if(val) {
-          golferNames.push(val);
+      // Gather all golfer names
+      let golfers = [];
+      for (let i = 1; i <= 15; i++) {
+        const name = formData.get(`golferName${i}`);
+        if (name && name.trim() !== '') {
+          golfers.push(name.trim());
         }
-      });
+      }
 
-      if (golferNames.length === 0) {
-        alert("Please enter at least one golfer name.");
+      // Validate at least one golfer for both plans
+      if (golfers.length === 0) {
+        alert('Please enter at least one golfer name.');
+        return;
+      }
+      if (pricing === '2-day' && golfers.length > 1) {
+        alert('For the $2 plan, please enter only one golfer.');
         return;
       }
 
-      let carrier = '';
-      if (carrierOtherRadio.checked) {
-        carrier = carrierOtherText.value.trim();
+      // Redirect to appropriate Google Form based on pricing plan
+      let googleFormUrl = '';
+      let entryMapping = {};
+      if (pricing === '2-day') {
+        // 2-day form URL and entries
+        googleFormUrl = 'https://docs.google.com/forms/d/e/YOUR_2_DAY_FORM_ID/formResponse'; // replace YOUR_2_DAY_FORM_ID
+        entryMapping = {
+          phone: 'entry.1512645840',
+          paymentOption: 'entry.847055468',
+          playerName: 'entry.1974527345',
+          url: 'entry.721861280',
+          carrier: 'entry.922872338'
+        };
+      } else if (pricing === '5-full') {
+        // 5-day form URL and entries
+        googleFormUrl = 'https://docs.google.com/forms/d/e/YOUR_5_DAY_FORM_ID/formResponse'; // replace YOUR_5_DAY_FORM_ID
+        entryMapping = {
+          phone: 'entry.1512645840',
+          paymentOption: 'entry.847055468',
+          playerName: 'entry.1974527345',
+          url: 'entry.721861280',
+          carrier: 'entry.922872338'
+        };
       } else {
-        carrier = document.querySelector('input[name="carrier"]:checked').value;
+        alert('Unknown pricing plan selected.');
+        return;
       }
 
-      // Google Forms URLs (replace with your full URLs)
-      const formTwoDay = "https://docs.google.com/forms/d/e/1FAIpQLSiQgLKXRhngsTLq5f9/viewform";
-      const formFiveFull = "https://docs.google.com/forms/d/e/1FAIpQLSfe1pw84Y7d3748dy8/viewform";
+      // Build submission URL with parameters for the first golfer
+      const params = new URLSearchParams();
+      params.append(entryMapping.phone, phone);
+      params.append(entryMapping.paymentOption, pricing === '2-day' ? '$2 for 24 Hours, Single Golfer' : '$5 for Full Tournament, Multiple Golfers');
+      params.append(entryMapping.playerName, golfers[0]);
+      params.append(entryMapping.url, tournamentUrl);
+      params.append(entryMapping.carrier, carrier);
 
-      // Entry IDs for each form:
-      const entryPhone_2day = "entry.1512645840";
-      const entryPayment_2day = "entry.847055468";
-      const entryPlayerName_2day = "entry.1974527345";
-      const entryUrl_2day = "entry.721861280";
-      const entryCarrier_2day = "entry.922872338";
+      // Open submission in a new tab
+      window.open(`${googleFormUrl}?${params.toString()}`, '_blank');
 
-      const entryPhone_5day = "entry.1512645840";
-      const entryPayment_5day = "entry.847055468";
-      const entryPlayerName_5day = "entry.1974527345";
-      const entryUrl_5day = "entry.721861280";
-      const entryCarrier_5day = "entry.922872338";
-
-      // Build redirect URL with multiple golfer entries for $5 plan
-      let redirectUrl = "";
-
-      if (pricing === "2-day") {
-        // Only one golfer
-        redirectUrl = `${formTwoDay}?${entryPhone_2day}=${encodeURIComponent(phone)}&${entryPayment_2day}=${encodeURIComponent("$2 for 24 Hours, Single Golfer")}&${entryUrl_2day}=${encodeURIComponent(tournamentUrl)}&${entryCarrier_2day}=${encodeURIComponent(carrier)}&${entryPlayerName_2day}=${encodeURIComponent(golferNames[0])}`;
-      } else {
-        // For multiple golfers, we can only pass one player name per entry.
-        // Google Forms only supports single value per entry field,
-        // so here we concatenate the names into one string separated by commas.
-        const allGolfers = golferNames.join(", ");
-        redirectUrl = `${formFiveFull}?${entryPhone_5day}=${encodeURIComponent(phone)}&${entryPayment_5day}=${encodeURIComponent("$5 for Full Tournament, Multiple Golfers")}&${entryUrl_5day}=${encodeURIComponent(tournamentUrl)}&${entryCarrier_5day}=${encodeURIComponent(carrier)}&${entryPlayerName_5day}=${encodeURIComponent(allGolfers)}`;
-      }
-
-      setTimeout(() => {
-        window.location.href = redirectUrl;
-      }, 800);
-    });
-  </script>
-
-</body>
-</html>
+      alert('Thank you
