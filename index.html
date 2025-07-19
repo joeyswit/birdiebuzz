@@ -38,14 +38,15 @@
 </head>
 <body class="bg-green-50 min-h-screen flex flex-col">
 
-  <header class="bg-green-700 text-white py-4 text-center flex items-center justify-center px-4">
-  <h1 class="text-4xl font-semibold text-white header-font">
-    BirdieBuzz
-  </h1>
-</header>
+  <header class="bg-green-700 text-white py-4 px-4 flex items-center justify-center gap-4">
+    <img src="BirdieBuzzLogo.PNG" alt="BirdieBuzz Logo" class="h-10 w-auto">
+    <h1 class="text-4xl font-semibold text-white header-font">
+      BirdieBuzz
+    </h1>
+  </header>
 
   <main class="flex-grow flex items-center justify-center px-6 sm:px-8 text-center max-w-6xl mx-auto mt-8 relative z-10">
-  <div class="flex flex-col md:flex-row items-center gap-13 w-full px-4 sm:px-6">
+    <div class="flex flex-col md:flex-row items-center gap-13 w-full px-4 sm:px-6">
 
       <!-- Left: Text content -->
       <div class="flex-1 max-w-xl md:pr-6">
@@ -58,34 +59,29 @@
 
         <div class="bg-green-100 rounded-2xl shadow-xl p-6 w-full">
           <!-- Sign Up Button (Initially Disabled) -->
-<a href="https://birdiebuzz-signup.pages.dev/signup.html"
-   target="_blank" 
-   id="signUpButton"
-   class="block w-full bg-green-600 text-white font-semibold py-2 rounded hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed flex justify-center items-center mb-4 transition duration-200 shadow-md opacity-50 cursor-not-allowed pointer-events-none">
-  Sign Up for BirdieBuzz Alerts
-</a>
-
-
+          <a href="https://birdiebuzz-signup.pages.dev/signup.html"
+             target="_blank" 
+             id="signUpButton"
+             class="block w-full bg-green-600 text-white font-semibold py-2 rounded hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed flex justify-center items-center mb-4 transition duration-200 shadow-md opacity-50 cursor-not-allowed pointer-events-none">
+            Sign Up for BirdieBuzz Alerts
+          </a>
 
           <!-- Unsubscribe Link -->
           <a href="https://forms.gle/qa8UyNeWPQLxdLk37" target="_blank"
-   class="block w-full bg-white border border-gray-400 text-gray-700 hover:border-gray-500 hover:text-black font-semibold py-2 rounded flex justify-center items-center transition duration-200">
-  Unsubscribe from Alerts
-</a>
-
+             class="block w-full bg-white border border-gray-400 text-gray-700 hover:border-gray-500 hover:text-black font-semibold py-2 rounded flex justify-center items-center transition duration-200">
+            Unsubscribe from Alerts
+          </a>
         </div>
 
-<!-- Consent Text with Checkbox -->
-<div class="mt-4 max-w-lg mx-auto">
-  <label class="flex items-start gap-2 text-xs italic text-gray-600 text-left">
-    <input type="checkbox" id="consentCheckbox" class="mt-1" />
-    <span>
-      By checking this box, you agree to receive recurring SMS alerts about golfers you follow. Message & data rates may apply. You can reply STOP to unsubscribe or click the unsubscribe button above.
-    </span>
-  </label>
-</div>
-
-
+        <!-- Consent Text with Checkbox -->
+        <div class="mt-4 max-w-lg mx-auto">
+          <label class="flex items-start gap-2 text-xs italic text-gray-600 text-left">
+            <input type="checkbox" id="consentCheckbox" class="mt-1" />
+            <span>
+              By checking this box, you agree to receive recurring SMS alerts about golfers you follow. Message & data rates may apply. You can reply STOP to unsubscribe or click the unsubscribe button above.
+            </span>
+          </label>
+        </div>
 
         <!-- Two blank rows of space between text and image -->
         <p>&nbsp;</p>
@@ -102,10 +98,9 @@
     </div>
   </main>
 
-<div class="text-center text-gray-700 pt-2 pb-1">
-    <!-- Three blank rows of space between image and text -->
-      <p>&nbsp;</p>  
-  <p>&nbsp;</p>
+  <div class="text-center text-gray-700 pt-2 pb-1">
+    <p>&nbsp;</p>  
+    <p>&nbsp;</p>
     <p>&nbsp;</p>
     For support, contact us at <a href="mailto:birdiebuzzalerts@gmail.com" class="text-green-700 hover:underline">birdiebuzzalerts@gmail.com</a>
   </div>
