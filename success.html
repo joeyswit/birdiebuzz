@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Payment Success</title>
+</head>
+<body>
+  <h1>Thanks for your purchase!</h1>
+  <p>Processing your registration...</p>
+
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const sessionId = urlParams.get("session_id");
+
+    if (sessionId) {
+      fetch("https://script.google.com/macros/s/AKfycbybrikCOcSwKx7jqkjt6mtxITQnOFFbWSHbXy8W8OdgR2m0_nzkJDFQCmzDY0j-OuAi/exec?session_id=" + sessionId)
+        .then(res => res.text())
+        .then(data => console.log("✅ Apps Script Response:", data))
+        .catch(err => console.error("❌ Apps Script Error:", err));
+    } else {
+      console.error("No session ID in URL.");
+    }
+  </script>
+</body>
+</html>
