@@ -15,14 +15,9 @@
       font-family: 'Poppins', sans-serif;
     }
 
-    /* 🔁 Custom Y-axis spin animation */
     @keyframes spinY {
-      from {
-        transform: rotateY(0deg);
-      }
-      to {
-        transform: rotateY(360deg);
-      }
+      from { transform: rotateY(0deg); }
+      to { transform: rotateY(360deg); }
     }
 
     .spin-y {
@@ -40,8 +35,8 @@
     </div>
   </div>
 
-  <!-- ✅ Main Content - Hidden Initially -->
-  <div id="content" class="hidden">
+  <!-- ✅ Main Content - Hidden + Transparent Initially -->
+  <div id="content" class="opacity-0 transition-opacity duration-700 ease-out">
 
     <header class="bg-green-100 py-5 px-4 flex justify-center sticky top-0 z-40 shadow-md">
       <div class="flex items-center justify-center gap-3 w-full max-w-md relative">
@@ -52,7 +47,6 @@
           <img src="https://joeyswit.github.io/birdiebuzz/Text3.png" alt="BirdieBuzz Text" class="h-12 sm:h-14 md:h-18 w-auto">
         </a>
 
-        <!-- Keep Easter Egg Button -->
         <button id="easterEggBtn" class="absolute top-0 right-0 bg-yellow-400 text-black py-2 px-3 rounded hidden" onclick="submitFormForFree()">Submit for Free</button>
       </div>
     </header>
@@ -117,8 +111,9 @@
     window.addEventListener('load', () => {
       setTimeout(() => {
         document.getElementById('loader').style.display = 'none';
-        document.getElementById('content').classList.remove('hidden');
-      }, 1500); // Adjust duration here (ms)
+        const content = document.getElementById('content');
+        content.classList.remove('opacity-0');
+      }, 1500); // Duration of loader
     });
   </script>
 
