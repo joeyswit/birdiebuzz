@@ -5,25 +5,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>BirdieBuzz – AI-Driven Golf Alerts</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Header font -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet" />
   <style>
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     }
-
     .header-font {
       font-family: 'Poppins', sans-serif;
     }
-
     .subtle-ai {
       text-decoration: underline;
-      text-decoration-color: #d1fae5; /* Tailwind emerald-100 */
+      text-decoration-color: #d1fae5;
       text-underline-offset: 3px;
-      color: #065f46; /* Tailwind emerald-900 */
+      color: #065f46;
       font-weight: 500;
     }
-
     .soft-edges {
       -webkit-mask-image:
         linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 2%, rgba(0,0,0,1) 98%, rgba(0,0,0,0) 100%),
@@ -34,86 +30,93 @@
       -webkit-mask-composite: intersect;
       mask-composite: intersect;
     }
+    @keyframes spinY {
+      from { transform: rotateY(0deg); }
+      to { transform: rotateY(360deg); }
+    }
+    .spin-y {
+      animation: spinY 1.5s linear infinite;
+      transform-style: preserve-3d;
+    }
   </style>
 </head>
 <body class="bg-green-50 min-h-screen flex flex-col">
 
-  <!-- Sticky, Elevated Header -->
-  <header class="bg-green-100 py-5 px-4 flex justify-center sticky top-0 z-50 shadow-md">
-    <div class="flex items-center justify-center gap-3 w-full max-w-md">
-      <img src="Logo3.png" alt="Bird Logo" class="h-14 sm:h-18 md:h-24 w-auto">
-      <img src="Text3.png" alt="BirdieBuzz Text" class="h-12 sm:h-14 md:h-18 w-auto">
+  <!-- 🔄 Loading Animation -->
+  <div id="loader" class="fixed inset-0 bg-white z-50 flex flex-col justify-center items-center space-y-4">
+    <div style="perspective: 1000px;">
+      <img src="Logo3.png" alt="Loading" class="w-24 h-24 spin-y">
     </div>
-  </header>
-
-  <!-- Main Content -->
-  <main class="flex-grow flex items-center justify-center px-6 sm:px-8 text-center max-w-6xl mx-auto mt-10 relative z-10">
-    <div class="flex flex-col md:flex-row items-center gap-13 w-full px-4 sm:px-6">
-
-      <!-- Left: Text content -->
-      <div class="flex-1 max-w-xl md:pr-6">
-        <p class="text-black text-lg mb-4 leading-relaxed">
-          Get <span class="subtle-ai">AI-powered</span>, instant hole-by-hole text message alerts for the golfers you follow. Whether you're tracking a friend in a local tournament or a pro, BirdieBuzz keeps you in the loop.
-        </p>
-        <p class="text-black text-lg font-semibold mb-8 leading-relaxed">
-          No more refreshing leaderboards. Just buzzes when it matters.
-        </p>
-
-        <!-- Signup / Unsubscribe -->
-        <div class="bg-green-100 rounded-2xl shadow-xl p-6 w-full">
-          <a href="https://birdiebuzz-signup.pages.dev/signup.html"
-             target="_blank" 
-             id="signUpButton"
-             class="block w-full bg-green-600 text-white font-semibold py-2 rounded hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed flex justify-center items-center mb-4 transition duration-200 shadow-md opacity-50 cursor-not-allowed pointer-events-none">
-            Sign Up for BirdieBuzz Alerts
-          </a>
-
-          <a href="https://forms.gle/qa8UyNeWPQLxdLk37" target="_blank"
-             class="block w-full bg-white border border-gray-400 text-gray-700 hover:border-gray-500 hover:text-black font-semibold py-2 rounded flex justify-center items-center transition duration-200">
-            Unsubscribe from Alerts
-          </a>
-        </div>
-
-        <!-- Consent Text -->
-        <div class="mt-4 max-w-lg mx-auto">
-          <label class="flex items-start gap-2 text-xs italic text-gray-600 text-left">
-            <input type="checkbox" id="consentCheckbox" class="mt-1" />
-            <span>
-              By checking this box, you agree to receive SMS alerts from BirdieBuzz about golfers you follow (around 18 messages per day). Consent is not a condition of purchase. Message & data rates may apply. You can reply STOP to cancel or click the unsubscribe button above.
-            </span>
-          </label>
-        </div>
-
-        <!-- Spacer -->
-        <p>&nbsp;</p><p>&nbsp;</p>
-      </div>
-
-      <!-- Right: Screenshot -->
-      <div class="flex-1 max-w-xs md:pl-6">
-        <img src="birdiebuzz-iphone-screenshot3.png" alt="BirdieBuzz SMS preview"
-             class="rounded-xl shadow-md w-full soft-edges">
-      </div>
-
-    </div>
-  </main>
-
-  <!-- Support -->
-  <div class="text-center text-gray-700 pt-2 pb-1">
-    <p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p>
-    For support, contact us at <a href="mailto:birdiebuzzalerts@gmail.com" class="text-green-700 hover:underline">birdiebuzzalerts@gmail.com</a>
+    <p class="text-green-700 font-semibold text-lg">Loading...</p>
   </div>
 
-  <!-- Footer -->
-  <footer class="text-center text-gray-600 pt-6 pb-2 z-10 relative">
-    <div class="mb-2">
-      <a href="terms.html" class="text-green-700 hover:underline mx-2">Terms of Service</a> |
-      <a href="privacy.html" class="text-green-700 hover:underline mx-2">Privacy Policy</a> |
-      <a href="about.html" class="text-green-700 hover:underline mx-2">About</a>
-    </div>
-    &copy; 2025 BirdieBuzz, Inc.
-  </footer>
+  <!-- 📃 Main Content -->
+  <div id="content" class="opacity-0 transition-opacity duration-700 ease-out">
 
-  <!-- Enable Button on Checkbox Check -->
+    <header class="bg-green-100 py-5 px-4 flex justify-center sticky top-0 z-50 shadow-md">
+      <div class="flex items-center justify-center gap-3 w-full max-w-md">
+        <img src="Logo3.png" alt="Bird Logo" class="h-14 sm:h-18 md:h-24 w-auto">
+        <img src="Text3.png" alt="BirdieBuzz Text" class="h-12 sm:h-14 md:h-18 w-auto">
+      </div>
+    </header>
+
+    <main class="flex-grow flex items-center justify-center px-6 sm:px-8 text-center max-w-6xl mx-auto mt-10 relative z-10">
+      <div class="flex flex-col md:flex-row items-center gap-13 w-full px-4 sm:px-6">
+
+        <div class="flex-1 max-w-xl md:pr-6">
+          <p class="text-black text-lg mb-4 leading-relaxed">
+            Get <span class="subtle-ai">AI-powered</span>, instant hole-by-hole text message alerts for the golfers you follow. Whether you're tracking a friend in a local tournament or a pro, BirdieBuzz keeps you in the loop.
+          </p>
+          <p class="text-black text-lg font-semibold mb-8 leading-relaxed">
+            No more refreshing leaderboards. Just buzzes when it matters.
+          </p>
+
+          <div class="bg-green-100 rounded-2xl shadow-xl p-6 w-full">
+            <a href="https://birdiebuzz-signup.pages.dev/signup.html" target="_blank" id="signUpButton"
+               class="block w-full bg-green-600 text-white font-semibold py-2 rounded hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed flex justify-center items-center mb-4 transition duration-200 shadow-md opacity-50 cursor-not-allowed pointer-events-none">
+              Sign Up for BirdieBuzz Alerts
+            </a>
+
+            <a href="https://forms.gle/qa8UyNeWPQLxdLk37" target="_blank"
+               class="block w-full bg-white border border-gray-400 text-gray-700 hover:border-gray-500 hover:text-black font-semibold py-2 rounded flex justify-center items-center transition duration-200">
+              Unsubscribe from Alerts
+            </a>
+          </div>
+
+          <div class="mt-4 max-w-lg mx-auto">
+            <label class="flex items-start gap-2 text-xs italic text-gray-600 text-left">
+              <input type="checkbox" id="consentCheckbox" class="mt-1" />
+              <span>
+                By checking this box, you agree to receive SMS alerts from BirdieBuzz about golfers you follow (around 18 messages per day). Consent is not a condition of purchase. Message & data rates may apply. You can reply STOP to cancel or click the unsubscribe button above.
+              </span>
+            </label>
+          </div>
+          <p>&nbsp;</p><p>&nbsp;</p>
+        </div>
+
+        <div class="flex-1 max-w-xs md:pl-6">
+          <img src="birdiebuzz-iphone-screenshot3.png" alt="BirdieBuzz SMS preview"
+               class="rounded-xl shadow-md w-full soft-edges">
+        </div>
+
+      </div>
+    </main>
+
+    <div class="text-center text-gray-700 pt-2 pb-1">
+      <p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p>
+      For support, contact us at <a href="mailto:birdiebuzzalerts@gmail.com" class="text-green-700 hover:underline">birdiebuzzalerts@gmail.com</a>
+    </div>
+
+    <footer class="text-center text-gray-600 pt-6 pb-2 z-10 relative">
+      <div class="mb-2">
+        <a href="terms.html" class="text-green-700 hover:underline mx-2">Terms of Service</a> |
+        <a href="privacy.html" class="text-green-700 hover:underline mx-2">Privacy Policy</a> |
+        <a href="about.html" class="text-green-700 hover:underline mx-2">About</a>
+      </div>
+      &copy; 2025 BirdieBuzz, Inc.
+    </footer>
+  </div>
+
   <script>
     const checkbox = document.getElementById('consentCheckbox');
     const button = document.getElementById('signUpButton');
@@ -124,6 +127,13 @@
       } else {
         button.classList.add('opacity-50', 'pointer-events-none', 'cursor-not-allowed');
       }
+    });
+
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        document.getElementById('loader').style.display = 'none';
+        document.getElementById('content').classList.remove('opacity-0');
+      }, 1500);
     });
   </script>
 
