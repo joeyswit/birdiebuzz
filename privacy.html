@@ -14,13 +14,30 @@
     .header-font {
       font-family: 'Poppins', sans-serif;
     }
+
+    /* 🔁 Custom Y-axis spin animation */
+    @keyframes spinY {
+      from {
+        transform: rotateY(0deg);
+      }
+      to {
+        transform: rotateY(360deg);
+      }
+    }
+
+    .spin-y {
+      animation: spinY 1.5s linear infinite;
+      transform-style: preserve-3d;
+    }
   </style>
 </head>
 <body class="bg-green-50 min-h-screen flex flex-col">
 
-  <!-- 🔄 Spinning Logo Loader -->
+  <!-- 🔄 Spinning Y-axis Logo Loader -->
   <div id="loader" class="fixed inset-0 bg-white z-50 flex justify-center items-center">
-    <img src="https://joeyswit.github.io/birdiebuzz/Logo3.png" alt="Loading" class="w-24 h-24 spin-y">
+    <div style="perspective: 1000px;">
+      <img src="https://joeyswit.github.io/birdiebuzz/Logo3.png" alt="Loading" class="w-24 h-24 spin-y">
+    </div>
   </div>
 
   <!-- ✅ Main Content - Hidden Initially -->
