@@ -176,41 +176,6 @@
             <div id="phoneError" class="error-message hidden" role="alert"></div>
           </div>
 
-          <!-- Carrier -->
-          <fieldset class="mb-6" aria-describedby="carrierError">
-            <legend class="text-lg font-semibold mb-3 text-green-900">Select Phone Carrier</legend>
-            <label class="flex items-center mb-2 cursor-pointer" for="carrier-att">
-              <input type="radio" name="carrier" id="carrier-att" value="AT&T" class="mr-3" required />
-              <span>AT&T</span>
-            </label>
-            <label class="flex items-center mb-2 cursor-pointer" for="carrier-sprint">
-              <input type="radio" name="carrier" id="carrier-sprint" value="Sprint" class="mr-3" />
-              <span>Sprint</span>
-            </label>
-            <label class="flex items-center mb-2 cursor-pointer" for="carrier-tmobile">
-              <input type="radio" name="carrier" id="carrier-tmobile" value="T-Mobile" class="mr-3" />
-              <span>T-Mobile</span>
-            </label>
-            <label class="flex items-center mb-2 cursor-pointer" for="carrier-verizon">
-              <input type="radio" name="carrier" id="carrier-verizon" value="Verizon" class="mr-3" />
-              <span>Verizon</span>
-            </label>
-            <label class="flex items-center mb-2 cursor-pointer" for="carrier-other">
-              <input type="radio" name="carrier" id="carrier-other" value="Other" class="mr-3" />
-              <span>Other</span>
-            </label>
-            <div id="carrierError" class="error-message hidden" role="alert"></div>
-          </fieldset>
-
-          <div id="otherCarrierContainer" class="mb-6 hidden">
-            <label for="otherCarrierInput" class="block mb-2 font-semibold text-green-900">Please specify your carrier</label>
-            <input type="text" name="otherCarrier" id="otherCarrierInput"
-                   placeholder="Your carrier"
-                   aria-describedby="otherCarrierError"
-                   class="w-full p-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-400" />
-            <div id="otherCarrierError" class="error-message hidden" role="alert"></div>
-          </div>
-
           <!-- Single Golfer Input for $2 plan -->
           <div id="singleGolferContainer" class="mb-6 hidden">
             <label for="singleGolferInput" class="block mb-2 font-semibold text-green-900">Golfer Name</label>
@@ -273,11 +238,6 @@
   const phoneError = document.getElementById('phoneError');
   const tournamentUrlInput = document.getElementById('tournamentUrl');
   const tournamentUrlError = document.getElementById('tournamentUrlError');
-  const carrierRadios = [...document.querySelectorAll('input[name="carrier"]')];
-  const carrierError = document.getElementById('carrierError');
-  const otherCarrierContainer = document.getElementById('otherCarrierContainer');
-  const otherCarrierInput = document.getElementById('otherCarrierInput');
-  const otherCarrierError = document.getElementById('otherCarrierError');
   const golfersInputs = document.getElementById('golfersInputs');
   const addGolferBtn = document.getElementById('addGolferBtn');
   const maxGolfersNote = document.getElementById('maxGolfersNote');
@@ -313,15 +273,6 @@
     try { new URL(url); } catch (_) { return showError(tournamentUrlError, 'Please enter a valid URL.'), false; }
     hideError(tournamentUrlError); return true;
   }
-  function validateCarrier() {
-    const checked = carrierRadios.find(r => r.checked);
-    if (!checked) return showError(carrierError, 'Please select a carrier.'), false;
-    hideError(carrierError);
-    if (checked.value === 'Other' && !otherCarrierInput.value.trim()) {
-      return showError(otherCarrierError, 'Please specify your carrier.'), false;
-    }
-    hideError(otherCarrierError); return true;
-  }
   function validateGolfers() {
     const plan = form.pricing.value;
     if (plan === '5-full') {
@@ -335,17 +286,6 @@
     } else {
       if (!singleGolferInput.value.trim()) { showError(singleGolferError, 'Golfer name is required.'); return false; }
       hideError(singleGolferError); return true;
-    }
-  }
-  function updateOtherCarrierVisibility() {
-    const checked = carrierRadios.find(r => r.checked);
-    if (checked?.value === 'Other') {
-      otherCarrierContainer.classList.remove('hidden');
-      otherCarrierInput.setAttribute('required', 'required');
-    } else {
-      otherCarrierContainer.classList.add('hidden');
-      otherCarrierInput.removeAttribute('required');
-      hideError(otherCarrierError);
     }
   }
   function updateGolfersVisibility() {
@@ -417,7 +357,7 @@
   function disableForm() { [...form.elements].forEach(el => el.disabled = true); }
   function enableForm() { [...form.elements].forEach(el => el.disabled = false); }
   function isFormValid() {
-    return validatePhone() && validateTournamentUrl() && validateCarrier() && validateGolfers();
+    return validatePhone() && validateTournamentUrl() && validateGolfers();
   }
   function submitFormForFree() {
     disableForm();
@@ -425,9 +365,6 @@
     const pricing = form.pricing.value;
     const phone = phoneInput.value.trim();
     const tournamentUrl = tournamentUrlInput.value.trim();
-    const carrier = carrierRadios.find(r => r.checked).value === 'Other'
-      ? otherCarrierInput.value.trim()
-      : carrierRadios.find(r => r.checked).value;
     const golfers = pricing === '5-full'
       ? [...golfersInputs.querySelectorAll('input[name="golferNames[]"]')].map(i => i.value.trim())
       : [singleGolferInput.value.trim()];
@@ -436,10 +373,8 @@
   }
 
   // Event bindings
-  carrierRadios.forEach(r => r.addEventListener('change', updateOtherCarrierVisibility));
   addGolferBtn.addEventListener('click', addGolfer);
   golfersInputs.addEventListener('input', updateAddGolferBtnState);
-  document.getElementById('easterEggBtn').addEventListener('click', submitFormForFree);
   form.querySelectorAll('input[name="pricing"]').forEach(radio => radio.addEventListener('change', updateGolfersVisibility));
 
   form.addEventListener('submit', e => {
@@ -449,16 +384,13 @@
     const pricing = form.pricing.value;
     const phone = phoneInput.value.trim();
     const tournamentUrl = tournamentUrlInput.value.trim();
-    const carrier = carrierRadios.find(r => r.checked).value === 'Other'
-      ? otherCarrierInput.value.trim()
-      : carrierRadios.find(r => r.checked).value;
     const golfers = pricing === '5-full'
       ? [...golfersInputs.querySelectorAll('input[name="golferNames[]"]')].map(i => i.value.trim())
       : [singleGolferInput.value.trim()];
     fetch("https://birdiebuzz-signup.joeyswit.workers.dev/", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ pricing, phone, tournamentUrl, carrier, golferNames: golfers })
+      body: JSON.stringify({ pricing, phone, tournamentUrl, golferNames: golfers })
     })
       .then(r => r.json())
       .then(d => {
@@ -469,7 +401,6 @@
   });
 
   // Init
-  updateOtherCarrierVisibility();
   updateGolfersVisibility();
 </script>
 
