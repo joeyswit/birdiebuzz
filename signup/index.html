@@ -202,6 +202,20 @@
             <div class="max-golfers-note" id="maxGolfersNote"></div>
           </div>
 
+          <div class="mt-4">
+            <label class="flex items-start gap-2 text-sm text-gray-700">
+              <input type="checkbox" id="consentCheckbox" required class="mt-1" />
+              <span>
+                By checking this box, you agree to receive SMS alerts from BirdieBuzz about golfers you follow.
+                Message frequency varies (around 18/day). Consent isn’t a condition of purchase.
+                Message & data rates may apply. Reply STOP to cancel, HELP for help.
+                See <a href="/terms/" class="text-green-700 underline">Terms</a> and
+                <a href="/privacy/" class="text-green-700 underline">Privacy</a>.
+              </span>
+            </label>
+            <div id="consentError" class="error-message hidden" role="alert"></div>
+          </div>
+
 
           <!-- Submit -->
           <button type="submit"
@@ -253,6 +267,24 @@
   const maxGolfers = 15;
   const stripe = Stripe("pk_live_51Pm1nxREcKOamW909Su4Z9ijrkqr6a3pnhPHZZk1ZH5FyUxjjbAP30PC7Uy7jZaxSZRKQxXwUKBjox7JeU5cc7Io00oeuVxi9V");
 
+  const consentCheckbox = document.getElementById('consentCheckbox');
+  const consentError = document.getElementById('consentError');
+  
+  function validateConsent() {
+    if (!consentCheckbox.checked) {
+      showError(consentError, 'You must agree to receive SMS alerts.');
+      return false;
+    }
+    hideError(consentError);
+    return true;
+  }
+  
+  // include it in overall validation
+  function isFormValid() {
+    return validatePhone() && validateTournamentUrl() && validateGolfers() && validateConsent();
+  }
+
+  
   function showError(element, message) {
     element.textContent = message;
     element.classList.remove('hidden');
@@ -356,9 +388,6 @@
   }
   function disableForm() { [...form.elements].forEach(el => el.disabled = true); }
   function enableForm() { [...form.elements].forEach(el => el.disabled = false); }
-  function isFormValid() {
-    return validatePhone() && validateTournamentUrl() && validateGolfers();
-  }
   function submitFormForFree() {
     disableForm();
     if (!isFormValid()) return enableForm(), alert('Please complete the form correctly before submitting.');
@@ -387,11 +416,15 @@
     const golfers = pricing === '5-full'
       ? [...golfersInputs.querySelectorAll('input[name="golferNames[]"]')].map(i => i.value.trim())
       : [singleGolferInput.value.trim()];
+    const consent = consentCheckbox.checked;
+    const consentTs = new Date().toISOString();
+    
     fetch("https://birdiebuzz-signup.joeyswit.workers.dev/", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ pricing, phone, tournamentUrl, golferNames: golfers })
+      body: JSON.stringify({ pricing, phone, tournamentUrl, golferNames: golfers, consent, consentTs })
     })
+
       .then(r => r.json())
       .then(d => {
         if (!d.sessionId) throw new Error("No sessionId returned");
